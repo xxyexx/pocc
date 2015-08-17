@@ -1,0 +1,18 @@
+MySQL数据库文件夹说明文件
+
+1、文件说明：
+	本文件夹存放数据库 .sql 文件
+	注意每个表(table)分为单独生成为一个sql文件
+	如pocc数据库下包含role_inf unit_inf user_inf 三个数据库表
+	则database目录结构为：
+	database/说明.txt
+			/pocc_user_inf.sql
+			/pocc_role_inf.sql
+			/pocc_unit_inf.sql
+			/(pocc_all.sql)
+
+	ps：pocc_all.sql 为数据库所有表的文件，不建议生成
+
+
+2、生成说明：
+	生成个表都不会就砸电脑吧
