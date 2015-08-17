@@ -1,13 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%> 
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
-
+<%@ page import="edu.scnu316.entity.Role" %>
 <!doctype html>
 <html>
 <head>
@@ -19,9 +17,15 @@
 <!-- Bootstrap -->
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
-<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
+
+<!-- Bootstrap datetimepicker -->
+<link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+<script src="bootstrap-3.3.4-dist/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="bootstrap-3.3.4-dist/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js"></script>
+
+
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
 	<script src="../../assets/js/ie8-responsive-file-warning.js"></script>
@@ -70,297 +74,331 @@ body {
 	float:left;
 }
 .main{
+	height:100%;
 	margin-top:20px;
 	min-height:450px;
 	background-color: white;
-	width: 100%;
-	height: 100%;
 	overflow: scroll;
 }
-
-.table{
-	width: 100%;
-	height: 100%;
+.mainleft{
+	height:100%;
+	margin-top:20px;
+	min-height:450px;
+	background-color: white;
 	overflow: scroll;
 }
-
-
 </style>
 
 <script>
-	//初始函数
-	function startfun(){
-		<% User modal = (User) request.getAttribute("modalUser");
-			if (modal != null) {%>
-			//alert("startfun()");
-			$('#modal').modal('show');
+	//step1 账号前缀
+	function funStep1(){
+		var v=document.getElementById("step1").value;
+		var reg=/^[a-zA-Z0-9_]{5,8}$/;
+		var tip=document.getElementById("tip1");
+		tip.style.color="red";
+		if (v==""){ tip.innerHTML=""; return false;}
+		if (reg.test(v)){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="请输入5~8个字符，可包含字母、数字或下划线";
+			return false;
+		}
+	}
+	
+	//step2 开始序号
+	function funStep2a(){
+		var v=document.getElementById("step2a").value;
+		var reg=/^[0-9]{1,4}$/;
+		var tip=document.getElementById("tip2a");
+		if (v==""){ tip.innerHTML=""; return false;}
+		tip.style.color="red";
+		if (reg.test(v)&&parseInt(v,10)>=0&&parseInt(v,10)<=9999){
+			//序号没问题，输入符合要求
+			tip.innerHTML="";
+			//funStep2b();
+			return true;
+		}else{
+			tip.innerHTML="请输入为0~9999的整数";
+			return false;
+		}
+	}//step2 生成数量
+	function funStep2b(){
+		if (!funStep2a()){
+			return false;
+		}
+		var v=document.getElementById("step2b").value;
+		var reg=/^[0-9]{1,4}$/;
+		var tip=document.getElementById("tip2b");
+		if (v==""){ tip.innerHTML=""; return false;}
+		tip.style.color="red";
+		if (reg.test(v)&&parseInt(v,10)>=1&&parseInt(v,10)<=1000){
+			var s=new Number;
+			s=parseInt(v,10)+parseInt(document.getElementById("step2a").value,10);
+			//alert(s);
+			if (s>9999){
+				tip.innerHTML="开始序号和生成数量的和不能大于9999";
+				return false;
+			}else{
+				//输入符合要求
+				document.getElementById("step2bRes").value=s;
+				tip.innerHTML="";
+				return true;
+			}
+		}else{
+			tip.innerHTML="请输入1~1000的整数";
+			return false;
+		}		
+	}
+	//step2 提示先输入开始序号
+	function funStep2c(){
+		if (!funStep2a()){
+			//alert("请先填写开始序号！");
+			return false;
+		}
+	}
+	//合并前缀和序号
+	function merge(p,n){
+		var num=String(n);
+		while (num.length<4){
+			num="0"+num;
+		}
+		//alert(p+num);
+		return (p+num);
+	}
+	
+	//预览生成账号
+	function funDisplay(){
+		if (funStep1()&&funStep2a()&&funStep2b()){
+			var d1=document.getElementById("display1");	
+			var d2=document.getElementById("display2");	
+			var d3=document.getElementById("display3");
+			d1.innerHTML=merge(document.getElementById("step1").value
+						,document.getElementById("step2a").value);
+			d2.innerHTML="&nbsp;&nbsp;~&nbsp;&nbsp;";
+			d3.innerHTML=merge(document.getElementById("step1").value
+						,document.getElementById("step2bRes").value);
 			
-		<%}%>
+			//d1.innerHTML="test";
+			return;
+		}else{
+			return;
+		}	
 	}
-	//选择展示在表格中的用户
-	function selectUser(){
-		//alert("selectUser()");
-		var form1=this.getElementById("selector");
-		form1.submit();
+	
+	//检查后台是否有重复账号
+	function checkAccount(){
+		//使用AJAX检查后台是否有重复账号
+		//alert("checkAccount");
+	}
+	//step 3 检查租期
+	function funStep3a(){
+		var v=document.getElementById("step3a").value;
+		var tip=document.getElementById("tip3a");
+		var reg=/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+		tip.style.color="red";
+		if (reg.test(v)){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="无效的日期";
+			return false;
+		}
+	}
+	
+	//step 3  检查租期内费用
+	function funStep3b(){
+		var v=document.getElementById("step3b").value;
+		var reg=/^[0-9]{1,}(.[0-9]{1,})?$/;
+		var tip=document.getElementById("tip3b");
+		if (v==""){ tip.innerHTML=""; return false;}
+		tip.style.color="red";
+		if (reg.test(v)){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="输入大于0的小数或整数";
+			return false;
+		}
+	}
+	
+	function funStep3c(){
+		var v=document.getElementById("step3c").value;
+		var reg=/^[0-9a-zA-Z_]{6,25}$/;
+		var tip=document.getElementById("tip3c");
+		if (v==""){ tip.innerHTML=""; return false;}
+		tip.style.color="red";
+		if (reg.test(v)){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="长度为6~25，可使用字母、数字或下划线";
+			return false;
+		}
+	}
+	//step3 确认密码
+	function funStep3d(){
+		var tip=document.getElementById("tip3d");
+		var v=document.getElementById("step3d").value;
+		if (v==""||!funStep3c()){ tip.innerHTML=""; return false;}
+		tip.style.color="red";
+		if (v==document.getElementById("step3c").value){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="两次填写的密码需要一致";
+			return false;
+		}
 	}
 	
 	
-	//删除选中的单个用户
-	function deleteUser(id){
-		//TODO 询问是否确认删除
+	
+	function formsubmit(){
+		//确认所有用户信息都按需要填写
+		//alert(document.getElementsByName("rent_end").item(0).value);
+		if (funStep1()&&
+		funStep2a()&&funStep2b()&&
+		funStep3a()&&funStep3b()&&funStep3c()&&funStep3d()){
+			//提交
+			var f=document.getElementById("form");
+			f.action="UserAction_Create.action";
+			f.submit();
+		}else{
+			alert("提交失败，请检查输入信息！");
+		}
+	}
+	
+	function cleanAll(){
 		
-		//alert("function deleteUser()");
-		//alert("deleteUse "+id);
-		document.getElementById("user_id").value=id;
-		document.getElementById("tableform").action="UserAction_Delete.action";
-		document.getElementById("tableform").submit();
-		//alert("after deleteUse "+id);
-	}
-	
-	//TODO
-	//批量删除选中用户
-	function deleteSelectedUser(id){
-	}
-	
-	//TODO
-	//选中全部用户
-	function selectAll(){
-	}
-	
-	//用户新增、修改模态框
-	//根据id选择用户，展示用户信息
-	//see saveModal()
-	function launchModal(id){
-		document.getElementById("user_id").value=id;
-		document.getElementById("tableform").action="UserAction_Show.action";
-		document.getElementById("tableform").submit();
-		//$('#modal').modal('show');
-	}
-	
-	//保存模态框信息
-	//若id为0，新建用户；若id不为0，更新用户信息
-	function saveModal(){
 	
 	}
+	
+	
 	
 </script>
-
-<body onload="startfun()">
-</head>
+<body>
 <!--导入头部导航条-->
 <%@include file="../header.jsp" %>
-
-<%@page import="edu.scnu316.entity.User" %>
-<%@page import="java.util.List" %>
-<%
-	//生成用户列表
-	List<User> userList = null;
-	//User user = new User();
-	//user.setUser_account("test1230010");
-	//pageContext.setAttribute("modalUser", user);
-%>
-
 
 <div class="container-fluid">
 <div class="row">
 	<!--导入左边导航条-->
-	<%@include file="../left.jsp"%>
+	<%@include file="../left.jsp" %>
 	<!-- 右边内容区域 -->
 	<div class="col-md-10 col-sm-8 right-div">
 	    <div class="title">
 		    <a><span class="glyphicon glyphicon-blackboard"></span>
-		       <span>&nbsp;&nbsp;实验用户管理</span>
+		       <span>&nbsp;&nbsp;用户批量生成</span>
 		    </a>
 	    </div>
 	    <!--用户列表模块-->
 	    <div class="main">
-	    
-	    <!-- 用户查询框 -->
-	    <div class="col-md-2" onload="selectUser()">
-	    	<form action="UserAction_Select.action" class="form-horizontal" id="selector" method="post"
-	    		style="">
+	    <div class="container">
+	    	<form id="form" class="form-horizontal" method="post">
+	    	<!--第一步及第二步-->
+	    	<div class="col-md-5 col-md-offset-1">
+	    		
+	    		<label><h3>第一步&nbsp;&nbsp;<small>输入用户账号前缀：</small></h3></label><br>
 	    		<div class="form-group">
-	    			<label>单位：</label><br>
-	   	 			<div class="col-md-11">
-	    				<input class="form-control">
-	    			</div>
-	    		</div>
-	    		<div class="form-group">
-	    		<button class="btn btn-success" onclick="selectUser()">查询用户</button>
-	    		</div>.
-	    		<div class="form-group">
-				<button class="btn btn-primary" type="button"
-					onclick="window.location.href='CreateUser.action'">
-   					新增用户
-				</button>
+  					<label style="text-align: right;" class="col-md-3 control-label"><h5><small><em>账号前缀：</em></small></h5></label>
+  					<div class="col-md-6">
+   	 					<input id="step1" name="prefix" type="text" placeholder="输入5~8个字母或数字" class="form-control" onblur="funStep1()">
+   	 					<small id="tip1"></small>
+   	 				</div>
+   	 			</div>
+   	 			<label><h3>第二步&nbsp;&nbsp;<small>账号开始序号及生成数量：</small></h3></label><br>
+  				<div class="form-group">
+  					<label style="text-align: right;" class="col-md-3 control-label"><h5><small><em>开始序号：</em></small></h5></label>
+  					<div class="col-md-6">
+   	 					<input id="step2a" name="first"type="text" placeholder="0~9999的整数" class="form-control" 
+   	 					onblur="funStep2a()">
+   	 					<small id="tip2a"></small>
+   	 				</div>
+   	 			</div>
+   	 			<div class="form-group" onfocus="step2c">
+   	 				<label style="text-align: right;" class="col-md-3 control-label"><h5><small><em>生成数量：</em></small></h5></label>
+   	 				<div class="col-md-6">
+   	 					<input id="step2b" name="number"type="text" class="form-control" placeholder="1~1000的整数"
+   	 					onblur="funStep2b();funDisplay()" onfocus="funStep2c()">
+   	 					<small id="tip2b"></small>
+   	 					<input id="step2bRes" type="hidden">
+   	 				</div>
+   	 			</div>
+   	 			<div class="form-group">
+   	 				<h5>生成的账号为：</h5>
+   	 				<div style="margin-left: 10">
+   	 				<h4><em style="margin-left: 10%;">
+   	 					<b id="display1"></b>
+   	 					<b id="display2"></b>
+   	 					<b id="display3"></b>
+   	 				</em></h4>
+   	 				</div>
+   	 				<button class="btn btn-default btn-sm" type="button"
+   	 				onclick="funDisplay();checkAccount()">检查</button>
+   	 			</div>
+  			</div>
+  			
+  			<!--第三步-->
+  			<div class="col-md-5">
+  					<h3>第三步&nbsp;&nbsp;<small>账号初始信息：</small></h3><br>
+  				<div class="col-md-offset-1">
+  				<div class="form-group">
+  					<label>到期时间<small><em>（允许登录并做实验的期限）</em></small></label>
+  					<br><div class="col-md-8">
+  						<input id="step3a" name="rent_end" type="date" class="form-control" value="2015-11-01" data-date-format="yyyy/mm/dd"
+  						onblur="funStep3a()">
+  						<small id="tip3a"></small>
+  					</div>	
+  				</div>
+   	 			<div class="form-group">
+   	 				<label>租期内费用<small><em>（单位：元）</em></small></label>
+   	 				<br><div class="col-md-8">
+   	 					<input id="step3b" name="price" type="text" class="form-control" placeholder="大于0"
+   	 					onblur="funStep3b()">
+   	 					<small id="tip3b"></small>
+  					</div>	
+  				</div>	
+  				<div class="form-group">
+  					<label>初始密码：</label>
+   	 				<br><div class="col-md-8">
+   	 					<input id="step3c" name="password1" type="text" class="form-control" placeholder="6~25个字母、数字或下划线"
+   	 					onblur="funStep3c()">
+   	 					<small id="tip3c"></small>
+  					</div>	
+  				</div>
+  				
+  				<div class="form-group">	
+  					<label>确认密码：</label>
+   	 				<br><div class="col-md-8">	
+   	 					<input id="step3d" name="password2" type="text" class="form-control" placeholder="再次输入密码"
+   	 					onblur="funStep3d()">
+   	 					<small id="tip3d"></small>
+					</div>	
 				</div>
-			</form>
-	    </div>
-	    <!-- 用户查询框 -->
+				<%Role r = (Role) session.getAttribute("Role");
+					if (r==null) System.out.println("r is null"); 
+				%>
+				<input type="hidden" name="m_operator" value="<%=r.getUser_account()%>">
+				</div>
+			</div>
+			
+			<!--清空、确认-->
+			<div align="center" class="col-md-12">
+  				<button class="btn btn-warning col-md-2 col-md-offset-3">全部清空</button>
+  				<span class="col-md-1"></span>
+  			<button onclick="formsubmit()" type="button"
+  			class="btn btn-success col-md-2">批量生成</button>
+  					
+  			</div>
+  			</form>
+		</div>
+
+	    </div>	
 	    
-	    <!-- 用户列表框 -->	    
-	    <div class="col-md-10">
-	    <form id="tableform" method="post">
-	    <table class="table table-striped table-responsive table-condensed" style="overflow:inherit;">
-	    	<thead>
-	    		<tr>
-	    			<th>用户账号</th>
-	    			<th>用户姓名</th>
-	    			<th>所属单位</th>
-	    			<th>锁定状态</th>
-	    			<th>租期结束时间</th>
-	    			<td>
-						<a><span style="font-size: large;"></span></a>
-						</td><td>
-						<button class="btn btn-danger btn-sm"><span
-						class="glyphicon glyphicon-trash"></span></button>
-						</td><td>
-						<input type="checkbox">
-					</td>
-	    		</tr>
-	    	</thead>
-			<tbody>
-			<%  userList = (List<User>) session.getAttribute("userList");
-				if (userList!=null)
-				for (User u:userList){
-			%>
-				<tr>
-					<td><%=u.getUser_account() %></td>
-					<td><%=u.getUsername() %></td>
-					<td><%=u.getUnit_name() %></td>
-					<td><%=u.getLock_modeToCN() %></td>
-					<td><%=u.getRent_end("yyyy-MM-dd") %></td>
-					<td>
-						<button class="btn btn-primary btn-sm" type="button"
-							onclick="launchModal(<%=u.getUser_id()%>)">
-						<span class="glyphicon glyphicon-edit"></span></button>
-						</td><td>
-						<button class="btn btn-danger btn-sm" onclick="deleteUser('<%=u.getUser_id()%>')">
-						<span class="glyphicon glyphicon-trash"></span></button>
-						</td><td>
-						<input type="checkbox">
-					</td>
-				</tr>
-			<%} %>
-			</tbody>
-		</table>
-		<input id="user_id" name="user_id" type="hidden"/>
-			<%if (session.getAttribute("userList")==null){%> <h4>请选择实验用户</h4>
-			<%} %>
-		</form>
-  		<!-- 用户查询框 -->
-	    </div>
 	    </div>
 	    <!--用户列表模块..-->
 	</div>
 	<!-- 右边内容区域..-->
-	
-
-<!-- 用户修改、增加模态框 -->
-<s:if test="#request.modalUser!=null">
- 
-<form action="UpdateAction.action" method="post" class="form-horizontal">
-<div class="modal fade" id="modal" tabindex="-1"
-	role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">用户账号：<em><s:property value="#request.modalUser.user_account"/></em></h4>
-	 </div>
-      <div class="modal-body container">
-      <!-- 用户信息表单 -->
-        	<div class="col-md-6">
-        		<div class="form-group">
-   					<label class="col-md-4 control-label"><small>用户姓名：</small></label>
-   					<div class="col-md-8">
-    					<input type="text" class="form-control" name="m_username" 
-    					value=<s:property value="#request.modalUser.username"/>>
-    				</div>
-    			</div>
-    			<div class="form-group">
-   					<label class="col-md-4 control-label"><small>所属单位：</small></label>
-   					<div class="col-md-8">
-    					<input type="text" class="form-control" name="m_unit_name" 
-    					value=<s:property value="#request.modalUser.unit_name"/>>
-    				</div>
-    			</div>
-    			<div class="form-group">
-   					<label class="col-md-4 control-label"><small>缴费日期：</small></label>
-   					<div class="col-md-8">
-    					<input type="date" class="form-control" name="m_pay_date"
-    					value=<s:property value="#request.modalUser.getPay_date('yyyy-MM-dd')"/>>
-    				</div>
-    			</div>
-    			<div class="form-group">
-   					<label class="col-md-4 control-label"><small>租金：</small></label>
-   					<div class="col-md-8">
-    					<input type="text" class="form-control" name="m_price" 
-    					value=<s:property value="#request.modalUser.price"/>>
-    				</div>
-    			</div>
-  			</div>
-        	<div class="col-md-6">
-        		<div class="form-group">
-   					<label class="col-md-4 control-label"><small>租期开始：</small></label>
-   					<div class="col-md-8">
-    					<input type="date" class="form-control" name="m_rent_start" 
-						value=<s:property value="#request.modalUser.getRent_start('yyyy-MM-dd')"/>>
-    				</div>
-    			</div>
-    			<div class="form-group">
-   					<label class="col-md-4 control-label"><small>租期结束：</small></label>
-   					<div class="col-md-8">
-    					<input type="date" class="form-control" name="m_rent_end"
-    					value=<s:property value="#request.modalUser.getRent_end('yyyy-MM-dd')"/>>
-    				</div>
-    			</div>    			
-    			<div class="form-group">
-    				<label class="col-md-4 control-label"><small>锁定状态：</small></label>
-   					<div class="col-md-8">
- 						<select class="form-control" name="m_lock_mode">
- 							<option value="UNLOCK"    <s:if test="#request.modalUser.lock_mode.equals('UNLOCK')">selected</s:if>>有效</option>
- 							<option value="LOCK_TEMP" <s:if test="#request.modalUser.lock_mode.equals('LOCK_TEMP')">selected</s:if>>暂时锁定</option>
- 							<option value="LOCK_EVER" <s:if test="#request.modalUser.lock_mode.equals('LOCK_EVER')">selected</s:if>>永久锁定</option>
- 						</select>
-					</div>
-    			</div>
-    			<input name="m_operator" type="hidden" 
-    				value=<s:property value="#session.Role.user_account"/> >
-    			<input name="user_id" type="hidden"
-    				value=<s:property value="#request.modalUser.user_id"/> >
-    			<div class="form-group">
-   					<label class="col-md-4 control-label"><small>密码：</small></label>
-   					<div class="col-md-8">
-    					<input class="btn btn-default" type="button" value="重设密码" 
-    					style="width:100%; text-align: left; color: #555;">
-    				</div>
-    			</div>
-        	</div>
-        	<!-- 备注项先预留
-        	<div class="col-md-12">
-        		<div class="col-md-2">
-  					<label><small>备注：</small></label>
-  				</div>	
-  				<div class="col-md-10">
-  					<input type="text" class="form-control">
-				</div>
-        	</div> 
-        	-->
-	
-      </div>
-      <div class="modal-footer" style="text-align: rigth;">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button  class="btn btn-info">保存</button>
-        <button type="button" class="btn btn-primary">下一条</button>
-      </div>
-    </div>
-  </div>
-</div>
-</form>
-</s:if>
-<!-- 用户修改、增加模态框 -->
-</div>
 </div>   
 </body>
 </html>
