@@ -269,8 +269,16 @@ body {
 	}
 	
 	function cleanAll(){
-		
-	
+		document.getElementById("step1").value="";
+		document.getElementById("step2a").value="";
+		document.getElementById("step2b").value="";
+		document.getElementById("step3a").value="";
+		document.getElementById("step3b").value="";
+		document.getElementById("step3c").value="";
+		document.getElementById("step3d").value="";
+		document.getElementById("display1").innerHTML="";
+		document.getElementById("display2").innerHTML="";
+		document.getElementById("display3").innerHTML="";
 	}
 	
 	
@@ -384,10 +392,11 @@ body {
 			
 			<!--清空、确认-->
 			<div align="center" class="col-md-12">
-  				<button class="btn btn-warning col-md-2 col-md-offset-3">全部清空</button>
+  				<button class="btn btn-warning col-md-2 col-md-offset-3"
+  					type="button" onclick="cleanAll()">全部清空</button>
   				<span class="col-md-1"></span>
-  			<button onclick="formsubmit()" type="button"
-  			class="btn btn-success col-md-2">批量生成</button>
+  				<button onclick="formsubmit()" type="button"
+  				class="btn btn-success col-md-2">批量生成</button>
   					
   			</div>
   			</form>
