@@ -90,14 +90,14 @@ body {
 </style>
 
 <script>
-	//step1
-	function step1(x){
-		var v=x.value;
-		var reg=/[a-zA-Z0-9_]{5,}/;
+	//step1 账号前缀
+	function funStep1(){
+		var v=document.getElementById("step1").value;
+		var reg=/^[a-zA-Z0-9_]{5,8}$/;
 		var tip=document.getElementById("tip1");
 		tip.style.color="red";
 		if (v==""){ tip.innerHTML=""; return false;}
-		if (reg.test(v)&&v.length<=8){
+		if (reg.test(v)){
 			tip.innerHTML="";
 			return true;
 		}else{
@@ -106,52 +106,180 @@ body {
 		}
 	}
 	
-	//step2
-	function step2a(x){
-		var v=x.value;
-		alert(v);
-		alert("step2");
-	}
-	
-	function step22(x){
-		if (!step21){
-			alert("请先填写开始序号！");
+	//step2 开始序号
+	function funStep2a(){
+		var v=document.getElementById("step2a").value;
+		var reg=/^[0-9]{1,4}$/;
+		var tip=document.getElementById("tip2a");
+		if (v==""){ tip.innerHTML=""; return false;}
+		tip.style.color="red";
+		if (reg.test(v)&&parseInt(v,10)>=0&&parseInt(v,10)<=9999){
+			//序号没问题，输入符合要求
+			tip.innerHTML="";
+			//funStep2b();
+			return true;
+		}else{
+			tip.innerHTML="请输入为0~9999的整数";
 			return false;
 		}
-		var v=x.value;
-		var reg=/[0-9]/;
-		var tip=document.getElementById("tip22");
+	}//step2 生成数量
+	function funStep2b(){
+		if (!funStep2a()){
+			return false;
+		}
+		var v=document.getElementById("step2b").value;
+		var reg=/^[0-9]{1,4}$/;
+		var tip=document.getElementById("tip2b");
 		if (v==""){ tip.innerHTML=""; return false;}
 		tip.style.color="red";
 		if (reg.test(v)&&parseInt(v,10)>=1&&parseInt(v,10)<=1000){
 			var s=new Number;
-			s=parseInt(v,10)+parseInt(document.getElementById("step21").value,10);
+			s=parseInt(v,10)+parseInt(document.getElementById("step2a").value,10);
+			//alert(s);
 			if (s>9999){
 				tip.innerHTML="开始序号和生成数量的和不能大于9999";
 				return false;
 			}else{
+				//输入符合要求
+				document.getElementById("step2bRes").value=s;
 				tip.innerHTML="";
 				return true;
 			}
 		}else{
 			tip.innerHTML="请输入1~1000的整数";
 			return false;
-		}
-		
+		}		
 	}
-
+	//step2 提示先输入开始序号
+	function funStep2c(){
+		if (!funStep2a()){
+			//alert("请先填写开始序号！");
+			return false;
+		}
+	}
+	//合并前缀和序号
+	function merge(p,n){
+		var num=String(n);
+		while (num.length<4){
+			num="0"+num;
+		}
+		//alert(p+num);
+		return (p+num);
+	}
+	
+	//预览生成账号
+	function funDisplay(){
+		if (funStep1()&&funStep2a()&&funStep2b()){
+			var d1=document.getElementById("display1");	
+			var d2=document.getElementById("display2");	
+			var d3=document.getElementById("display3");
+			d1.innerHTML=merge(document.getElementById("step1").value
+						,document.getElementById("step2a").value);
+			d2.innerHTML="&nbsp;&nbsp;~&nbsp;&nbsp;";
+			d3.innerHTML=merge(document.getElementById("step1").value
+						,document.getElementById("step2bRes").value);
+			
+			//d1.innerHTML="test";
+			return;
+		}else{
+			return;
+		}	
+	}
+	
+	//检查后台是否有重复账号
+	function checkAccount(){
+		//使用AJAX检查后台是否有重复账号
+		//alert("checkAccount");
+	}
+	//step 3 检查租期
+	function funStep3a(){
+		var v=document.getElementById("step3a").value;
+		var tip=document.getElementById("tip3a");
+		var reg=/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+		tip.style.color="red";
+		if (reg.test(v)){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="无效的日期";
+			return false;
+		}
+	}
+	
+	//step 3  检查租期内费用
+	function funStep3b(){
+		var v=document.getElementById("step3b").value;
+		var reg=/^[0-9]{1,}(.[0-9]{1,})?$/;
+		var tip=document.getElementById("tip3b");
+		if (v==""){ tip.innerHTML=""; return false;}
+		tip.style.color="red";
+		if (reg.test(v)){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="输入大于0的小数或整数";
+			return false;
+		}
+	}
+	
+	function funStep3c(){
+		var v=document.getElementById("step3c").value;
+		var reg=/^[0-9a-zA-Z_]{6,25}$/;
+		var tip=document.getElementById("tip3c");
+		if (v==""){ tip.innerHTML=""; return false;}
+		tip.style.color="red";
+		if (reg.test(v)){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="长度为6~25，可使用字母、数字或下划线";
+			return false;
+		}
+	}
+	//step3 确认密码
+	function funStep3d(){
+		var tip=document.getElementById("tip3d");
+		var v=document.getElementById("step3d").value;
+		if (v==""||!funStep3c()){ tip.innerHTML=""; return false;}
+		tip.style.color="red";
+		if (v==document.getElementById("step3c").value){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="两次填写的密码需要一致";
+			return false;
+		}
+	}
+	
+	
 	
 	function formsubmit(){
 		//确认所有用户信息都按需要填写
 		//alert(document.getElementsByName("rent_end").item(0).value);
-		
-		//提交
-		var f=document.getElementById("form");
-		f.action="UserAction_Create.action";
-		f.submit();
+		if (funStep1()&&
+		funStep2a()&&funStep2b()&&
+		funStep3a()&&funStep3b()&&funStep3c()&&funStep3d()){
+			//提交
+			var f=document.getElementById("form");
+			f.action="UserAction_Create.action";
+			f.submit();
+		}else{
+			alert("提交失败，请检查输入信息！");
+		}
 	}
 	
-	
+	function cleanAll(){
+		document.getElementById("step1").value="";
+		document.getElementById("step2a").value="";
+		document.getElementById("step2b").value="";
+		document.getElementById("step3a").value="";
+		document.getElementById("step3b").value="";
+		document.getElementById("step3c").value="";
+		document.getElementById("step3d").value="";
+		document.getElementById("display1").innerHTML="";
+		document.getElementById("display2").innerHTML="";
+		document.getElementById("display3").innerHTML="";
+	}
 	
 	
 	
@@ -182,7 +310,7 @@ body {
 	    		<div class="form-group">
   					<label style="text-align: right;" class="col-md-3 control-label"><h5><small><em>账号前缀：</em></small></h5></label>
   					<div class="col-md-6">
-   	 					<input name="prefix" type="text" placeholder="输入5~8个字母或数字" class="form-control" onblur="step1(this)">
+   	 					<input id="step1" name="prefix" type="text" placeholder="输入5~8个字母或数字" class="form-control" onblur="funStep1()">
    	 					<small id="tip1"></small>
    	 				</div>
    	 			</div>
@@ -190,23 +318,31 @@ body {
   				<div class="form-group">
   					<label style="text-align: right;" class="col-md-3 control-label"><h5><small><em>开始序号：</em></small></h5></label>
   					<div class="col-md-6">
-   	 					<input id="step21" name="first"type="text" placeholder="0~9999的整数" class="form-control" 
-   	 					onblur="step2a(this)">
-   	 					<small id="tip21"></small>
+   	 					<input id="step2a" name="first"type="text" placeholder="0~9999的整数" class="form-control" 
+   	 					onblur="funStep2a()">
+   	 					<small id="tip2a"></small>
    	 				</div>
    	 			</div>
-   	 			<div class="form-group">
+   	 			<div class="form-group" onfocus="step2c">
    	 				<label style="text-align: right;" class="col-md-3 control-label"><h5><small><em>生成数量：</em></small></h5></label>
    	 				<div class="col-md-6">
-   	 					<input name="number"type="text" class="form-control" placeholder="1~1000的整数">
+   	 					<input id="step2b" name="number"type="text" class="form-control" placeholder="1~1000的整数"
+   	 					onblur="funStep2b();funDisplay()" onfocus="funStep2c()">
+   	 					<small id="tip2b"></small>
+   	 					<input id="step2bRes" type="hidden">
    	 				</div>
    	 			</div>
    	 			<div class="form-group">
    	 				<h5>生成的账号为：</h5>
    	 				<div style="margin-left: 10">
-   	 				<h4><em style="margin-left: 10%;"><b>scnu1230001&nbsp;&nbsp;~&nbsp;&nbsp;scnu1230050</b></em></h4>
+   	 				<h4><em style="margin-left: 10%;">
+   	 					<b id="display1"></b>
+   	 					<b id="display2"></b>
+   	 					<b id="display3"></b>
+   	 				</em></h4>
    	 				</div>
-   	 				<button class="btn btn-default btn-sm">检查</button>
+   	 				<button class="btn btn-default btn-sm" type="button"
+   	 				onclick="funDisplay();checkAccount()">检查</button>
    	 			</div>
   			</div>
   			
@@ -215,29 +351,36 @@ body {
   					<h3>第三步&nbsp;&nbsp;<small>账号初始信息：</small></h3><br>
   				<div class="col-md-offset-1">
   				<div class="form-group">
-  					<label>租期<small><em>（允许登录并做实验的期限）</em></small></label>
+  					<label>到期时间<small><em>（允许登录并做实验的期限）</em></small></label>
   					<br><div class="col-md-8">
-  						<input name="rent_end" type="date" class="form-control" value="2015-11-01" data-date-format="yyyy/mm/dd">
+  						<input id="step3a" name="rent_end" type="date" class="form-control" value="2015-11-01" data-date-format="yyyy/mm/dd"
+  						onblur="funStep3a()">
+  						<small id="tip3a"></small>
   					</div>	
   				</div>
    	 			<div class="form-group">
    	 				<label>租期内费用<small><em>（单位：元）</em></small></label>
    	 				<br><div class="col-md-8">
-   	 					<input name="price" type="text" class="form-control" placeholder="大于0的小数或整数">
-   	 					
+   	 					<input id="step3b" name="price" type="text" class="form-control" placeholder="大于0"
+   	 					onblur="funStep3b()">
+   	 					<small id="tip3b"></small>
   					</div>	
   				</div>	
   				<div class="form-group">
   					<label>初始密码：</label>
    	 				<br><div class="col-md-8">
-   	 					<input name="password1" type="text" class="form-control" placeholder="6~20个字母、数字或下划线">
+   	 					<input id="step3c" name="password1" type="text" class="form-control" placeholder="6~25个字母、数字或下划线"
+   	 					onblur="funStep3c()">
+   	 					<small id="tip3c"></small>
   					</div>	
   				</div>
   				
   				<div class="form-group">	
   					<label>确认密码：</label>
    	 				<br><div class="col-md-8">	
-   	 					<input name="password2" type="text" class="form-control" placeholder="再次输入密码">
+   	 					<input id="step3d" name="password2" type="text" class="form-control" placeholder="再次输入密码"
+   	 					onblur="funStep3d()">
+   	 					<small id="tip3d"></small>
 					</div>	
 				</div>
 				<%Role r = (Role) session.getAttribute("Role");
@@ -249,9 +392,11 @@ body {
 			
 			<!--清空、确认-->
 			<div align="center" class="col-md-12">
-  				<button class="btn btn-warning col-md-2 col-md-offset-3">全部清空</button>
+  				<button class="btn btn-warning col-md-2 col-md-offset-3"
+  					type="button" onclick="cleanAll()">全部清空</button>
   				<span class="col-md-1"></span>
-  			<button onclick="formsubmit()" class="btn btn-success col-md-2">批量生成</button>
+  				<button onclick="formsubmit()" type="button"
+  				class="btn btn-success col-md-2">批量生成</button>
   					
   			</div>
   			</form>
