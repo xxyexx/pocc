@@ -1,2 +1,2 @@
 # pocc
-Principles of Computer Composition,simulation experiment management platform
+Principles of Computer Composition,platform of simulate experiment and management.
