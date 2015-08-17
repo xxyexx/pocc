@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <!-- 把它设置为开发模式，发布时要设置为false -->
+    <constant name="struts.devMode" value="true" />
+    <!-- 设置在class被修改时是否热加载，发布时要设置i为false -->
+    <constant name="struts.convention.classes.reload" value="true"/>
+    <!-- 编码utf-8 -->
+    <constant name="struts.i18n.encoding" value="utf-8" />
+    <package name="default" extends="json-default">
+    	<action name="UserAction_*" class="edu.scnu316.action.UserAction" method="{1}Ajax">
+    		<result type="json"></result>
+    	</action>
+    </package>
+</struts>    
