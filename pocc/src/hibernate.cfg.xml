@@ -5,7 +5,7 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql:///pocc</property>
+		<property name="connection.url">jdbc:mysql://127.0.0.1/pocc</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password">admin</property>
 		<property name="hibernate.c3p0.max_size">30</property>
