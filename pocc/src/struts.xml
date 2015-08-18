@@ -38,6 +38,9 @@
     	<action name="UserManager">
     		<result>/admin/user/usermanager.jsp</result>
     	</action>
+    	<action name="RoleManager">
+	   		<result>/admin/role/rolemanager.jsp</result>
+	   	</action>
     	<action name="UserAction_*" class="edu.scnu316.action.UserAction" method="{1}">
 	   		<result name="usermanager.jsp">/admin/user/usermanager.jsp</result>
 	   		<result name="createuser.jsp">/admin/user/createuser.jsp</result>

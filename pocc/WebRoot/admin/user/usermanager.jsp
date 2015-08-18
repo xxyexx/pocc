@@ -209,14 +209,14 @@ body {
 	    			<th>所属单位</th>
 	    			<th>锁定状态</th>
 	    			<th>租期结束时间</th>
-	    			<td>
+	    			<th>
 						<a><span style="font-size: large;"></span></a>
-						</td><td>
-						<button class="btn btn-danger btn-sm"><span
-						class="glyphicon glyphicon-trash"></span></button>
-						</td><td>
+						</th><th>
+						<button class="btn btn-danger btn-xs"><span
+						class="glyphicon glyphicon-remove"></span></button>
+						</th><th>
 						<input type="checkbox">
-					</td>
+					</th>
 	    		</tr>
 	    	</thead>
 			<tbody>
@@ -231,12 +231,12 @@ body {
 					<td><%=u.getLock_modeToCN() %></td>
 					<td><%=u.getRent_end("yyyy-MM-dd") %></td>
 					<td>
-						<button class="btn btn-primary btn-sm" type="button"
+						<button class="btn btn-primary btn-xs" type="button"
 							onclick="launchModal(<%=u.getUser_id()%>)">
 						<span class="glyphicon glyphicon-edit"></span></button>
 						</td><td>
-						<button class="btn btn-danger btn-sm" onclick="deleteUser('<%=u.getUser_id()%>')">
-						<span class="glyphicon glyphicon-trash"></span></button>
+						<button class="btn btn-danger btn-xs" onclick="deleteUser('<%=u.getUser_id()%>')">
+						<span class="glyphicon glyphicon-remove"></span></button>
 						</td><td>
 						<input type="checkbox">
 					</td>
