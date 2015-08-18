@@ -44,14 +44,14 @@ public class User implements Cloneable{
 	
 	
 	public User(){
-		//默认属性
-		//TODO
+		//默认属性		
 		this.user_id = 0;
 		this.price = 0;
 		this.seq = 0;
 		this.sex = "保密";
 		this.age = "保密";
 		this.city_id = 0;
+		//TODO
 		this.icon_url = "在实体类中设置默认头像路径";
 	}
 
@@ -222,7 +222,7 @@ public class User implements Cloneable{
 	}
 	
 	
-	
+//TODO	
 ////////////////////////////////////////////////////////////////////////
 //**************            注意看!!!          **********************///
 ///////////////////////////////////////////////////////////////////////
