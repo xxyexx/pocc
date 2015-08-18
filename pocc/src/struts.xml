@@ -38,6 +38,9 @@
     	<action name="UserManager">
     		<result>/admin/user/usermanager.jsp</result>
     	</action>
+		<action name="RoleManager">
+	   		<result>/admin/role/rolemanager.jsp</result>
+	   	</action>
     	<action name="UserAction_*" class="edu.scnu316.action.UserAction" method="{1}">
 	   		<result name="usermanager.jsp">/admin/user/usermanager.jsp</result>
 	   		<result name="createuser.jsp">/admin/user/createuser.jsp</result>
@@ -83,8 +86,8 @@
    		<action name="*Test">
     		<result>/student/poccTest.jsp</result>
     	</action>
-   		<action name="UserCenter*">
-    		<result>/student/UserCenter{1}.jsp</result>
+   		<action name="UserCenter*" class="edu.scnu316.action.UserCenterAction" method="{1}">
+    		<result name="UserCenter.jsp">/student/UserCenter.jsp</result>
     	</action>
     </package>
     <!-- 用户登录不作拦截，所以分开一个package -->

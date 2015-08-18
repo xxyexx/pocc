@@ -103,8 +103,8 @@ body{
 	</div>
 	<div class="btn-div col-md-12">
 		<div class="col-md-offset-6">
-		<input class="btn btn-primary" type="text" value="提交"/>
-		<input class="btn btn-success" type="text" value="保存"/>
+		<a class="btn btn-primary col-md-4">提交</a>
+		<a class="btn btn-success col-md-4 col-md-offset-1">保存</a>
 		</div>
 	</div>
 </div>

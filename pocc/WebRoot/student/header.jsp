@@ -83,7 +83,7 @@
            <ul class="dropdown-menu" role="menu">
            	<li><a href="student.action?select=0"><span class='glyphicon glyphicon-user' aria-hidden=true></span>&nbsp;&nbsp;个人中心</a></li>
            	<li role="separator" class="divider"></li>
-			<li><a href="UserCenter.action"><span class='glyphicon glyphicon-cog' aria-hidden=true></span>&nbsp;&nbsp;设置</a></li>
+			<li><a href="UserCenterShow.action"><span class='glyphicon glyphicon-cog' aria-hidden=true></span>&nbsp;&nbsp;设置</a></li>
 			<li role="separator" class="divider"></li>
 			<li><a href="User_Logout.action"><span class='glyphicon glyphicon-log-out' aria-hidden=true></span>&nbsp;&nbsp;退出</a></li>
            </ul>

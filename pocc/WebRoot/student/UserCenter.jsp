@@ -44,7 +44,7 @@ body{
 <div class="main">
 <div class="wcontainer">
    <ul class="setting-left">
-   	<li><a class="active" href="UserCenter.action">个人资料</a></li>
+   	<li><a class="active" href="UserCenterShow.action">个人资料</a></li>
    	<li><a href="UserCenterPic.action">头像设置</a></li>
    	<li><a href="UserCenterPwd.action">修改密码</a></li>
    </ul>
@@ -56,12 +56,7 @@ body{
 		</div>
 		<div class="info-group">
 		    <label class="control-label">所在城市</label>
-		    <select name="province"  class="form-control">
-		    	<option value="0">-请选择省份-</option>
-		    	<option value="1">广东省</option>
-		    	<option value="2">北京市</option>
-		    	<option value="3">天津市</option>
-		    </select>
+			<s:select list="#request.ProvinceMap" headerKey="-1" headerValue="-请选择省份-"></s:select>
 		    <select name="city"  class="form-control">
 		    	<option value="0">广州</option>
 		    	<option value="1">广州</option>
@@ -71,7 +66,7 @@ body{
 		</div>
 		<div class="info-group">
 		    <label for="school" class="control-label">所在学校</label>
-		    <input class="userinput form-control" type="text"  id="userName" placeholder="请输入学校（单位）全称">
+		    <input value="${session.User.unit_name}" class="userinput form-control" type="text"  id="userName" placeholder="请输入学校（单位）全称">
 		</div>
 		<div class="info-group">
 		    <label class="control-label">性别</label>
@@ -81,7 +76,7 @@ body{
 		</div>
 		<div class="user-sign">
 			 <label class="control-label">个性签名</label>
-			 <textarea class="form-control" rows="5" placeholder="这家伙很懒，什么都没写。"></textarea>
+			 <textarea class="form-control" rows="5" placeholder="这家伙很懒，什么都没写。">${session.User.remark}</textarea>
 		</div>
 		<button type="submit" class="btn btn-primary">保存</button>
 		</form>

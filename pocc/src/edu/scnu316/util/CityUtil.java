@@ -1,7 +1,9 @@
 package edu.scnu316.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 
@@ -67,12 +69,16 @@ public class CityUtil {
 	 * 返回所有国内所有省份
 	 * @return 国内所有省份名
 	 */
-	public static List<String> getProvince_all(){
+	public static Map <Integer,String> getProvince_all(){
 		List<String> list = new ArrayList<String>();
 		list.clear();
 		sql = "select p.province from province p";
 		list = (List<String>) sess.createSQLQuery(sql).list();
-		return list;
+		Map <Integer,String> ProviceMap = new HashMap<Integer, String>();
+		for(int i=0;i<list.size();i++){
+			ProviceMap.put(i, list.get(i));
+		}
+		return ProviceMap;
 	}
 }
 

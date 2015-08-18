@@ -281,16 +281,16 @@ body{
 		<div class="user_message">
 			<div class="user_info">
 				<div class="col-md-9 col-xs-8 userName"><s:property value="#session.User.username"/></div>
-				<div class="col-md-3 col-xs-4"><a href="UserCenter.action" data-toggle="tooltip" data-placement="top" title="设置"><span class="glyphicon glyphicon-cog userSetting" aria-hidden=true></span></a></div>
+				<div class="col-md-3 col-xs-4"><a href="UserCenterShow.action" data-toggle="tooltip" data-placement="top" title="设置"><span class="glyphicon glyphicon-cog userSetting" aria-hidden=true></span></a></div>
 			</div>
 			<br/>
 			<div class="user_info">
 				<div class="col-md-4 col-xs-3">性别</div>
-				<div class="col-md-8 col-xs-9">男</div>
+				<div class="col-md-8 col-xs-9"><s:property value="#session.User.sex"/></div>
 			</div>
 			<div class="user_info">
 				<div class="col-md-4 col-xs-3">年龄</div>
-				<div class="col-md-8 col-xs-9">20</div>
+				<div class="col-md-8 col-xs-9"><s:property value="#session.User.age"/></div>
 			</div>
 			<div class="user_info">
 				<div class="col-md-4 col-xs-3">单位</div>
@@ -298,7 +298,7 @@ body{
 			</div>
 			<div class="user_info">
 				<div class="col-md-4 col-xs-3">签名</div>
-				<div class="col-md-8 col-xs-9">上上下下、左右左右、BABA</div>
+				<div class="col-md-8 col-xs-9"><s:property value="#session.User.remark"/></div>
 			</div>
 		</div>
 	</div>
