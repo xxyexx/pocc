@@ -137,11 +137,7 @@ body {
 		//$('#modal').modal('show');
 	}
 	
-	//保存模态框信息
-	//若id为0，新建用户；若id不为0，更新用户信息
-	function saveModal(){
-	
-	}
+
 	
 </script>
 
@@ -213,7 +209,7 @@ body {
 						<a><span style="font-size: large;"></span></a>
 						</th><th>
 						<button class="btn btn-danger btn-xs"><span
-						class="glyphicon glyphicon-remove"></span></button>
+						class="glyphicon glyphicon-trash"></span></button>
 						</th><th>
 						<input type="checkbox">
 					</th>
@@ -236,7 +232,7 @@ body {
 						<span class="glyphicon glyphicon-edit"></span></button>
 						</td><td>
 						<button class="btn btn-danger btn-xs" onclick="deleteUser('<%=u.getUser_id()%>')">
-						<span class="glyphicon glyphicon-remove"></span></button>
+						<span class="glyphicon glyphicon-trash"></span></button>
 						</td><td>
 						<input type="checkbox">
 					</td>
