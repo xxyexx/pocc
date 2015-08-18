@@ -21,7 +21,8 @@ public class RoleDAO implements BaseDAO<Role> {
 
 	private static final Session sess = HibernateUtil.currentSession();
 	
-	public static RoleDAO getInstance = new RoleDAO();
+	public static final RoleDAO getInstance = new RoleDAO();
+	
 	
 	private static final Role getADMIN(){
 		Role admin = new Role();
