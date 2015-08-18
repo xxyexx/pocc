@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.*;
 
+import edu.scnu316.util.CityUtil;
 import edu.scnu316.util.StringUtil;
 
 
@@ -36,12 +37,25 @@ public class User implements Cloneable{
 	* 如账号为scnu1230010，序号为10 
 	*/
 	private int seq;
+	private String sex;
+	private String age;
+	private int city_id;
+	private String icon_url;
+
+	
+	
+	
 	
 	public User(){
 		//默认属性
+		//TODO
 		this.user_id = 0;
 		this.price = 0;
-		this.setSeq(0);
+		this.seq = 0;
+		this.sex = "保密";
+		this.age = "保密";
+		this.city_id = 0;
+		this.icon_url = "在实体类中设置默认头像路径";
 	}
 
 
@@ -280,6 +294,69 @@ public class User implements Cloneable{
 			e.printStackTrace();
 		}
 		return u;
+	}
+
+
+
+	public String getSex() {
+		return sex;
+	}
+
+
+
+	public void setSex(String sex) {
+		
+		this.sex = sex;
+	}
+
+
+
+	public String getAge() {
+		return age;
+	}
+
+
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+
+
+	public int getCity_id() {
+		return city_id;
+	}
+	
+	public String getCity_name(){		
+		return CityUtil.getCity_name(this.city_id);
+	}
+	
+	public String getProvince_name(){
+		return CityUtil.getProvince_name(this.city_id);
+	}
+
+
+
+	public void setCity_id(int city_id) {
+		this.city_id = city_id;
+	}
+
+
+
+	public String getIcon_url() {
+		return icon_url;
+	}
+
+
+
+	public void setIcon_url(String icon_url) {
+		this.icon_url = icon_url;
+	}
+
+
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 
 
