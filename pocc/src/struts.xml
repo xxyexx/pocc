@@ -48,6 +48,9 @@
 	   	<action name="UpdateAction" class="edu.scnu316.action.UpdateAction" method="Update">
 	   		<result name="usermanager.jsp">/admin/user/usermanager.jsp</result>
 	   	</action>
+	   	<action name="SelectRole" class="edu.scnu316.action.RoleAction" method="Select">
+	   		<result name="rolemanager.jsp">/admin/role/rolemanager.jsp</result>
+	   	</action>
     </package>
     <!-- 管理员登录不作拦截，所以分开一个package -->
    	<package name="RoleLogin" extends="json-default">

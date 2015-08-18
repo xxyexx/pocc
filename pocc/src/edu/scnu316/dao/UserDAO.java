@@ -99,7 +99,7 @@ public class UserDAO implements BaseDAO<User>{
 		Query query=sess.createQuery(hql);
 		@SuppressWarnings("unchecked")
 		List<User> list=query.list();
-		if (list.size()==0){
+		if (list.isEmpty()){
 			System.out.println("查询失败：该账号不存在");
 			return null;
 		}

@@ -72,10 +72,20 @@ body {
 	background-color: white;
 }
 </style>
+<script>
+	function selectRole(){
+		//alert("selectRole()");
+		var form1=this.getElementById("selector");
+		form1.submit();
+	}
+</script>
 <body>
 <!--导入头部导航条-->
 <%@include file="../header.jsp" %>
-
+<%@page import="edu.scnu316.entity.Role" %>
+<%	
+	//List<Role> roleList = null; 
+%>
 <div class="container-fluid">
 <div class="row">
 	<!--导入左边导航条-->
@@ -89,8 +99,31 @@ body {
 	    </div>
 	    <!--用户列表模块-->
 	    <div class="main">
+	    
+	    	<!-- 用户查询框 -->
 	    	<div class="col-md-2">
+	    	<form action="SelectRole.action" class="form-horizontal" id="selector" method="post"
+	    		style="">
+	    		<div class="form-group">
+	    			<label>单位：</label><br>
+	   	 			<div class="col-md-11">
+	    				<input class="form-control">
+	    			</div>
+	    		</div>
+	    		<div class="form-group">
+	    		<button class="btn btn-success" onclick="selectRole()">查询用户</button>
+	    		</div>.
+	    		<div class="form-group">
+				<button class="btn btn-primary" type="button"
+					onclick="">
+   					新增用户
+				</button>
+				</div>
+			</form>
 	    	</div>
+	    	<!-- 用户查询框 -->
+	    
+	   		<!-- 用户列表框 -->	
 	    	<div class="col-md-10"> 
 	    	<table class="table table-striped table-responsive table-condensed" style="overflow:inherit;">
 	    		<thead>
@@ -110,10 +143,14 @@ body {
 	    	 		</tr>
 	    	 	</thead>
 	    	 	<tbody>
+	    	 	<%List<Role> roleList = (List<Role>) session.getAttribute("roleList");
+				if (roleList!=null)
+				for (Role r:roleList){
+				%>
 	    	 		<tr>
-	    	 			<td>fs1001</td>
-	    	 			<td>系统管理员</td>
-	    	 			<td>属于华南师范大学</td>
+	    	 			<td><%=r.getUser_account() %></td>
+	    	 			<td><%=r.getRoleToCN() %></td>
+	    	 			<td><%=r.getRemark() %></td>
 	    	 			<td>重设密码</td>	
 	    	 			<td>
 						<button class="btn btn-primary btn-xs" type="button">							
@@ -125,6 +162,7 @@ body {
 						<input type="checkbox">
 						</td>   	 			
 	    	 		</tr>
+	    	 	<% } %>
 	    	 	</tbody>
 	    	 </table>
 	    	 </div>

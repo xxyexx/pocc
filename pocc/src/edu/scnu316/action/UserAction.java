@@ -62,11 +62,11 @@ public class UserAction extends ActionSupport {
 	 * 使用弹出框展示用户
 	 */
 	public String Show(){
-		System.out.println("enter Show()");
-		//System.out.println("request:"+ServletActionContext.getRequest().getParameter("user_id"));
+//		System.out.println("enter Show()");
+//		System.out.println("request:"+ServletActionContext.getRequest().getParameter("user_id"));
 		
-		//System.out.println(getUser_id());
-		//int id = Integer.parseInt(ServletActionContext.getRequest().getParameter("user_id"));
+//		System.out.println(getUser_id());
+//		int id = Integer.parseInt(ServletActionContext.getRequest().getParameter("user_id"));
 		request.setAttribute("modalUser", userService.getUserByID(getUser_id()));
 		return "usermanager.jsp";
 		

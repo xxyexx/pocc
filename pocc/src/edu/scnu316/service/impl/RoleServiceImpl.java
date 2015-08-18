@@ -4,6 +4,7 @@ import java.util.List;
 
 import edu.scnu316.dao.RoleDAO;
 import edu.scnu316.entity.Role;
+import edu.scnu316.entity.User;
 import edu.scnu316.service.RoleService;
 import edu.scnu316.util.MD5Util;
 
@@ -50,6 +51,11 @@ public class RoleServiceImpl implements RoleService{
 	public Role getRole(String user_account) {
 		Role role = Roledao.queryByAccount(user_account);
 		return role;
+	}
+	@Override
+	public List<Role> roleFilter(Role model) {
+		// TODO Auto-generated method stub
+		return RoleDAO.getInstance.queryAll(); 
 	}
 
 }

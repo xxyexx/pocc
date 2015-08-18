@@ -1,5 +1,7 @@
 package edu.scnu316.action;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
@@ -20,6 +22,9 @@ public class RoleAction extends ActionSupport {
 		request = ServletActionContext.getRequest();
 		Roleservice = new RoleServiceImpl();
 	}
+	
+	
+	
 	/**
 	 * 登录账号密码验证
 	 * @param
@@ -45,6 +50,17 @@ public class RoleAction extends ActionSupport {
 		request.getSession().invalidate();
 		return "Logout";
 	}
+	
+	public String Select(){
+		System.out.println("enter RoleAction Select()");
+		
+		request.getSession().setAttribute("roleList",
+				Roleservice.roleFilter(null));
+		
+		return "rolemanager.jsp";		
+	}
+	
+	
 	public String getUserName() {
 		return userName;
 	}
