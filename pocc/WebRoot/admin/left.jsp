@@ -80,7 +80,7 @@
     	<span class='glyphicon glyphicon-lock'></span>用户权限管理
     	</a>
         <div class="collapse" id="collapse2">
-		    <a class="second_li">管理员用户管理</a>
+		    <a href="RoleManager.action" class="second_li">管理员用户管理</a>
 		    <a class="second_li">实验用户管理</a>
 		</div>
     </li>

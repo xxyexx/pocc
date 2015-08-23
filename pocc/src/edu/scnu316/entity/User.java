@@ -1,4 +1,4 @@
-package edu.scnu316.entity;
+﻿package edu.scnu316.entity;
 
 import java.sql.Timestamp;
 
@@ -54,6 +54,7 @@ public class User implements Cloneable{
 		this.city_id = 0;
 		//默认头像设置
 		this.icon_url = "image/UserDefaultPic3.jpg";
+
 	}
 
 
@@ -80,7 +81,7 @@ public class User implements Cloneable{
 		return password;
 	}
 	public void setPassword(String password) {
-		this.password = MD5Util.md5Encode(password);
+		this.password = MD5Util.md5Encode(password);//这里要转md5
 	}
 	public String getLock_mode() {
 		return lock_mode;
@@ -222,8 +223,7 @@ public class User implements Cloneable{
 		this.user_id = user_id;
 	}
 	
-	
-	
+//TODO	
 ////////////////////////////////////////////////////////////////////////
 //**************            注意看!!!          **********************///
 ///////////////////////////////////////////////////////////////////////
@@ -235,19 +235,6 @@ public class User implements Cloneable{
 ////////////////////////////////////////////////////////////////////
 ///   1.中文类：返回属性对应中文字符                                                 ********///
 	
-	@Override
-	public String toString() {
-		return "User [user_id=" + user_id + ", user_account=" + user_account
-				+ ", username=" + username + ", password=" + password
-				+ ", lock_mode=" + lock_mode + ", unit_name=" + unit_name
-				+ ", rent_start=" + rent_start + ", rent_end=" + rent_end
-				+ ", price=" + price + ", pay_date=" + pay_date + ", operator="
-				+ operator + ", save_url=" + save_url + ", last_login="
-				+ last_login + ", last_ip=" + last_ip + ", remark=" + remark
-				+ ", seq=" + seq + ", sex=" + sex + ", age=" + age
-				+ ", city_id=" + city_id + ", icon_url=" + icon_url + "]";
-	}
-
 	/**
 	 * 返回锁定状态对应的中文
 	 * @return 有效、临时锁定或永久锁定
@@ -289,6 +276,7 @@ public class User implements Cloneable{
 	public String getCity_name(){		
 		return CityUtil.getCity_name(this.city_id);
 	}
+	
 	/**
 	 * 返回用户所属城市名
 	 * @return 如"广东省"
@@ -296,9 +284,7 @@ public class User implements Cloneable{
 	public String getProvince_name(){
 		return CityUtil.getProvince_name(this.city_id);
 	}
-	public int getProvince_id(){
-		return CityUtil.getProvince_id(getProvince_name());
-	}
+	
 
 ///***************************************************************///	
 ////////////////////////////////////////////////////////////////////

@@ -21,7 +21,8 @@ public class RoleDAO implements BaseDAO<Role> {
 
 	private static final Session sess = HibernateUtil.currentSession();
 	
-	public static RoleDAO getInstance = new RoleDAO();
+	public static final RoleDAO getInstance = new RoleDAO();
+	
 	
 	private static final Role getADMIN(){
 		Role admin = new Role();
@@ -64,7 +65,7 @@ public class RoleDAO implements BaseDAO<Role> {
 		Query query=sess.createQuery(hql);
 		@SuppressWarnings("unchecked")
 		List<Role> list=query.list();
-		if (list.size()==0){
+		if (list.isEmpty()){
 			System.out.println("查询失败：该账号不存在");
 			return null;
 		}

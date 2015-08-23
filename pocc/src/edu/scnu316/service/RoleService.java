@@ -1,8 +1,9 @@
-package edu.scnu316.service;
+﻿package edu.scnu316.service;
 
 import java.util.List;
 
 import edu.scnu316.entity.Role;
+import edu.scnu316.entity.User;
 
 /**
  * @author 路上一坨翔
@@ -40,5 +41,17 @@ public interface RoleService {
 	 */
 	public abstract Role getRole(String user_account);
 
-	List<Role> roleFilter(Role model);
+	
+	/**
+	 * 根据筛选条件返回符合条件的用户<br>
+	 * 返回用户符合以下条件：（当模板属性不为空时）
+	 * <blockquote><pre>
+	 * 1、管理员账号以模板账号为开头；<br>
+	 * </pre></blockquote>
+	 * @param model	管理员模板
+	 * @return 符合条件的管理员列表
+	 */
+	public List<Role> roleFilter(Role model);
+
+
 }
