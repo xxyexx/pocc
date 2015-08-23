@@ -110,21 +110,6 @@ input{
 	visibility: hidden;
 }
 </style>
-
-<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-<script type="text/javascript">
-$(function(){
-	$(".form-control").focus(function(){//输入框聚焦
-		$(this).css("background-color","white");
-		$(this).css("color","black");
-	});
-	$(".form-control").blur(function(){//输入框失焦
-		if($(this).val()==""){
-			$(this).css("background-color","transparent");
-		}
-	});
-});
-</script>
 </head>
 
 <body>
@@ -157,9 +142,18 @@ $(function(){
 					$(":input").focus(function(){
 			             resetCss();
 			        });
+		        	$(".form-control").focus(function(){//输入框聚焦
+						$(this).css("background-color","white");
+						$(this).css("color","black");
+					});
+					$(".form-control").blur(function(){//输入框失焦
+						if($(this).val()==""){
+							$(this).css("background-color","transparent");
+						}
+					});
 				});
 				function resetCss(){
-					$(":input").removeAttr("style");
+					$(":input").css("border-color","");//清除边框样式
 					$(".tips").css("visibility","hidden");
 				}
 				function geetest_ajax_results() {//先用ajax提交检测验证码

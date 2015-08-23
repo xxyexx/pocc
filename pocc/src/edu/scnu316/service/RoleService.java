@@ -39,4 +39,6 @@ public interface RoleService {
 	 * @return
 	 */
 	public abstract Role getRole(String user_account);
+
+	List<Role> roleFilter(Role model);
 }

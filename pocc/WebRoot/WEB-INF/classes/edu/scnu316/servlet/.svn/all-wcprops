@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/pocc/!svn/ver/1/src/edu/scnu316/servlet
+END
+GeetestConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/pocc/!svn/ver/1/src/edu/scnu316/servlet/GeetestConfig.java
+END
+VerifyLoginServlet.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/pocc/!svn/ver/1/src/edu/scnu316/servlet/VerifyLoginServlet.java
+END
+StartCapthcaServlet.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/pocc/!svn/ver/1/src/edu/scnu316/servlet/StartCapthcaServlet.java
+END

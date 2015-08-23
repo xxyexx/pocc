@@ -92,7 +92,7 @@
    		color: #656e73;
    		float:left;
    	}
-   	.user-info button{
+   	.user-info .btn{
    		width: 350px;
    		margin-left:140px;
    	}

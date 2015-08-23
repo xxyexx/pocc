@@ -276,7 +276,7 @@ body{
 <div class="col-md-3 left">
 	<div class="container_left">
 		<div class="user_Pic">
-			<img alt="头像" src="image/UserDefaultPic3.jpg" class="img-circle" width="120px;">
+			<img alt="头像" src="${session.User.icon_url}" class="img-circle" width="120px;">
 		</div>
 		<div class="user_message">
 			<div class="user_info">

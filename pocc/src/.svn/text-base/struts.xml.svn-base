@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <!-- 把它设置为开发模式，发布时要设置为false -->
+    <constant name="struts.devMode" value="false" />
+    <!-- 设置在class被修改时是否热加载，发布时要设置i为false -->
+    <constant name="struts.convention.classes.reload" value="true"/>
+    <!-- 编码utf-8 -->
+    <constant name="struts.i18n.encoding" value="utf-8" />
+    <!-- 后台 -->
+    <package name="Role" extends="json-default">
+       	<interceptors>
+        <interceptor name="RoleInterceptor" class="edu.scnu316.interceptor.RoleLoginInterceptor"></interceptor>
+        <interceptor name="AdminInterceptor" class="edu.scnu316.interceptor.AdminInterceptor"></interceptor>
+        <interceptor-stack name="RoleLoginStack">
+        	<interceptor-ref name="RoleInterceptor"></interceptor-ref>
+        	<interceptor-ref name="defaultStack"></interceptor-ref>
+        </interceptor-stack>
+        </interceptors>
+        <!--管理员登录的默认拦截器 -->
+        <default-interceptor-ref name="RoleLoginStack"></default-interceptor-ref>
+        <!--默认全局的登录页面 -->
+        <global-results>
+        	<result name="login">/login.jsp</result>
+        	<result name="NoPermission">/admin/NoPermission.jsp</result>
+        </global-results>
+        <action name="SysLogin">
+    		<result>/login.jsp</result>
+    	</action>
+    	<action name="RoleLogin">
+    		<result>/admin/SysIndex.jsp</result>
+    	</action>
+    	<action name="CreateUser">
+    		<!-- 实验用户批量生成拦截 :只有ADMIN才能使用 -->
+    		<interceptor-ref name="AdminInterceptor"></interceptor-ref>
+    		<result>/admin/user/createuser.jsp</result>
+    	</action>
+    	<action name="UserManager">
+    		<result>/admin/user/usermanager.jsp</result>
+    	</action>
+    	<action name="UserAction_*" class="edu.scnu316.action.UserAction" method="{1}">
+	   		<result name="usermanager.jsp">/admin/user/usermanager.jsp</result>
+	   		<result name="createuser.jsp">/admin/user/createuser.jsp</result>
+	   	</action>
+	   	<action name="UpdateAction" class="edu.scnu316.action.UpdateAction" method="Update">
+	   		<result name="usermanager.jsp">/admin/user/usermanager.jsp</result>
+	   	</action>
+    </package>
+    <!-- 管理员登录不作拦截，所以分开一个package -->
+   	<package name="RoleLogin" extends="json-default">
+    	<action name="RoleAction_*" class="edu.scnu316.action.RoleAction" method="{1}Ajax">
+    		<result type="json"></result>
+    		<result name="Logout">/login.jsp</result>
+    	</action>
+   	</package>
+    <!-- 学生  -->
+    <package name="student" extends="json-default">
+    	<interceptors>
+        <interceptor name="UserInterceptor" class="edu.scnu316.interceptor.UserInterceptor"></interceptor>
+        <interceptor-stack name="UserStack">
+        	<interceptor-ref name="UserInterceptor">
+        		<param name="excludeMethods">LoginAjax</param>
+        	</interceptor-ref>
+        	<interceptor-ref name="defaultStack"></interceptor-ref>
+        </interceptor-stack>
+        </interceptors>
+        <!--默认学生登录的拦截器 -->
+        <default-interceptor-ref name="UserStack"></default-interceptor-ref>
+        <!--默认全局的登录页面 -->
+        <global-results>
+        	<result name="login">/studentLogin.jsp</result>
+        </global-results>
+    	<action name="stuIndex">
+    		<result>/student/studentIndex.jsp</result>
+    	</action>
+    	<action name="stuLogin">
+    		<result>/studentLogin.jsp</result>
+    	</action>
+   		<action name="student">
+    		<result>/student/student.jsp</result>
+    	</action>
+   		<action name="UserCenter*">
+    		<result>/student/UserCenter{1}.jsp</result>
+    	</action>
+    </package>
+    <!-- 用户登录不作拦截，所以分开一个package -->
+    <package name="studentLogin" extends="json-default">
+        <action name="User_*" class="edu.scnu316.action.UserAction" method="{1}Ajax">
+    		<result type="json"></result>
+    		<result name="Logout" type="redirectAction">stuLogin</result>
+    	</action>
+    </package>
+</struts>    

@@ -28,6 +28,14 @@ public class CityUtil {
 		int res = Integer.parseInt(sess.createSQLQuery(sql).list().get(0).toString());
 		return res;		
 	}
+	/**
+	 * 通过省份名获得省份id
+	 */
+	public static int getProvince_id(String province_name){
+		sql = "select id from province where province='"+province_name+"'";		
+		int res = Integer.parseInt(sess.createSQLQuery(sql).list().get(0).toString());
+		return res;		
+	}
 	
 	/**
 	 * 通过城市id获得城市名
@@ -54,15 +62,19 @@ public class CityUtil {
 	 * @param province_name 省名，如  "广东省"
 	 * @return	该省对应的所有城市名
 	 */
-	public static List<String> getCity_all(String province_name){
+	public static Map <Integer,String> getCity_all(String province_name){
 		List<String> list = new ArrayList<String>();
 		list.clear();
 		String sql1 = "select p.id from province p where p.province='"+province_name+"'";
 		String pid = String.valueOf(sess.createSQLQuery(sql1).list().get(0));
-//		System.out.println(pid);
+		//System.out.println(pid);
 		String sql2 = "SELECT city FROM city where province_id="+pid;
 		list = (List<String>) sess.createSQLQuery(sql2).list();
-		return list;
+		Map <Integer,String> CityMap = new HashMap<Integer, String>();
+		for(int i=0;i<list.size();i++){
+			CityMap.put(getCity_id(list.get(i)), list.get(i));
+		}
+		return CityMap;
 	}
 	
 	/**
@@ -76,7 +88,7 @@ public class CityUtil {
 		list = (List<String>) sess.createSQLQuery(sql).list();
 		Map <Integer,String> ProviceMap = new HashMap<Integer, String>();
 		for(int i=0;i<list.size();i++){
-			ProviceMap.put(i, list.get(i));
+			ProviceMap.put(i+1, list.get(i));
 		}
 		return ProviceMap;
 	}

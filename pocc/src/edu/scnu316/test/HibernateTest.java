@@ -16,12 +16,20 @@ public class HibernateTest {
 
 //	private static Session sess = HibernateUtil.currentSession();
 	
+	public static void main(String args[]){
+		
+//		new HibernateTest().UnitTest();
+		new HibernateTest().UserTest();
+//		new HibernateTest().RoleTest();
+//		new HibernateTest().CityTest();
+	}
 	private void UserTest(){
 		User u = UserDAO.getInstance.queryByID(1);
 //		u.setUsername("小白");
 		System.out.println(u.getUsername()); 
 		System.out.println(u.getCity_name());
 		System.out.println(u.getProvince_name());
+		System.out.println(u.getRemark());
 //		UserDAO.getInstance.update(u);
 		
 
@@ -62,19 +70,19 @@ public class HibernateTest {
 	}
 	
 	private void RoleTest(){
-//		增加
-		Role role = new Role();
-		role.setUser_account("ff1050");
-		role.setPassword("dfdf5555");
-		role.setRole("manager");
-		RoleDAO.getInstance.insert(role);
+////		增加
+//		Role role = new Role();
+//		role.setUser_account("ff1050");
+//		role.setPassword("dfdf5555");
+//		role.setRole("manager");
+//		RoleDAO.getInstance.insert(role);
 		
 //		删除
 //		RoleDAO.getInstance.delete(2);
 		
 //		查询
-//		Role r = RoleDAO.getInstance.queryByID(3);
-//		System.out.println(r.getUser_account());
+		Role r = RoleDAO.getInstance.queryByID(5);
+		System.out.println(r.getUser_account());
 		
 //		修改
 //		Role r = RoleDAO.getInstance.queryByID(1);
@@ -96,11 +104,5 @@ public class HibernateTest {
 		System.out.println(s);
 	}
 	
-	public static void main(String args[]){
-		
-//		new HibernateTest().UnitTest();
-		new HibernateTest().UserTest();
-//		new HibernateTest().RoleTest();
-//		new HibernateTest().CityTest();
-	}
+
 }

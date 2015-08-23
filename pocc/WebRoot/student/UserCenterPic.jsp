@@ -48,9 +48,8 @@
    		height:200px;
    		float:left;
    	}
-   	.avator-btn-fake:LINK {
-		display: block;
-		text-decoration:none;
+   	.avator-btn-fake{
+   		display:block;
 		width:150px;
 		height: 35px;
 		color: #fff;
@@ -61,36 +60,32 @@
 		margin-top:160px;
 		float:left;
 	}
-	.setting-right form input{
-		width:150px;
-		height: 35px;
-		font-size: 20px;
-		filter: alpha(opacity=0);
-		opacity: 0;
-		cursor: pointer;
-		float:left;
-		margin-left:30px;
-		margin-top:-35px;
-		outline: none;
-		
+	#picInput{
+		visibility: hidden;
 	}
   </style>
+  <script type="text/javascript">
+	  function changePic(){//打开文件的输入框
+	  	 $("#picInput").click();
+	  };
+  </script>
 <!--导入头部导航条-->
 <%@include file="header.jsp" %>   
 <body>
 <div class="main">
 <div class="wcontainer">
    <ul class="setting-left">
-   	<li><a href="UserCenter.action">个人资料</a></li>
+   	<li><a href="UserCenterShow.action">个人资料</a></li>
    	<li><a class="active" href="UserCenterPic.action">头像设置</a></li>
    	<li><a href="UserCenterPwd.action">修改密码</a></li>
    </ul>
 	<div class="setting-right">
 		<div class="userPic">
-		<img alt="用户头像" src="image/UserDefaultPic3.jpg"/>
-		<form action="##" enctype="multipart/form-data" method="post">
-			<a href="javascript:void(0)" hidefocus="true" class="avator-btn-fake">上传头像</a>
-			<input title="上传头像"  type="file"  name="imgUrlfile" accept="image/*">
+		<img alt="用户头像" src="${session.User.icon_url}"/>
+		<form action="UserCenterChangePic.action"  enctype="multipart/form-data" method="post">
+			<!-- 这个按钮不能用button,不然一点就已经提交了,我也不知道为什么。 -->
+			<input onclick="changePic()" type="button" value="上传头像" class="avator-btn-fake" />
+			<input name="image" id="picInput" title="上传头像" type="file" accept="image/*" onchange="this.form.submit()" />
 		</form>
 		</div>
 	</div>
