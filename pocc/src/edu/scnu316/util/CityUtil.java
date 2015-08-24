@@ -44,7 +44,11 @@ public class CityUtil {
 	 */
 	public static String getCity_name(int city_id){
 		sql = "select city from city where id="+city_id;
-		return (String) sess.createSQLQuery(sql).list().get(0);
+		if(sess.createSQLQuery(sql).list().size()!=0){
+			return (String) sess.createSQLQuery(sql).list().get(0);
+		}else{
+			return "(´･ω･`)";
+		}
 	}
 	
 	/**
