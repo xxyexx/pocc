@@ -11,14 +11,21 @@
 		width:100%;
 		border-bottom: 3px solid #ddd; 
 	}
+	.btn-primary{
+		background-color:#337ab7 !important;
+	}
 	.navbar-toggle{
-		background-color: #65c17a;
+		background-color:white;
+		border:1px solid #ddd; 
+	}
+	.navbar-toggle:focus{
+		background-color:#ddd;
+	}
+	.icon-bar{
+		background-color:#666; 
 	}
 	.navbar-nav li{
 		background-color: white;
-	}
-	.icon-bar{
-		color:white;
 	}
 	.navbar li a{
 	  color:#777;
@@ -30,17 +37,12 @@
 	.navbar-brand{
 		height:30px;
 		padding:10 0 0 0px;
-		
 	}
 	.navbar li a:HOVER{
 		background-color: white;
 	}
-	#nav-div{
-		min-width:400px;
-	}
 	.container{
-		width: 80% !important;
-		min-width:650px !important;
+		min-width:330px !important;
 		margin:0 auto;
 	}
 	.TouserCenter{
@@ -60,14 +62,14 @@
  <div class="container " align="left" id="nav-div">
   <div class="navbar-header">
      　<!-- .navbar-toggle样式用于toggle收缩的内容，即nav-collapse collapse样式所在元素 -->
-       <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+       <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
          <span class="sr-only">切换导航</span>
-         <span class="icon-bar">—</span>
-         <span class="icon-bar">—</span>
-         <span class="icon-bar">—</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
        </button>
        <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 ·品牌图标-->
-       	<a href="User_Logout.action" class="btn btn-sm btn-primary navbar-toggle" id="hidden-login-btn" role="button">[退出]</a>
+       	<a href="User_Logout.action" class="btn btn-xs btn-primary navbar-toggle" id="hidden-login-btn" role="button">退出</a>
 		<a href="stuIndex.action" class="navbar-brand" id="brand-img">
 		  <img alt="Brand" src="image/banner5.png"  align="middle" width="150px">
 		</a>

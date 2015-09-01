@@ -16,9 +16,9 @@
 <!-- Bootstrap -->
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
-<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
+<script src="js/wtf.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
 	<script src="../../assets/js/ie8-responsive-file-warning.js"></script>
@@ -44,8 +44,8 @@ body{
 	background-color: #EBEAEB;
 }
 .row{
-	padding-left:150px;
-	padding-right:150px;
+	padding-left:8%;
+	padding-right:6%;
 }
 .left{
 	padding-right:15px;
@@ -128,8 +128,8 @@ body{
 		$("[data-toggle='tooltip']").tooltip(); 
 		var select=GetQueryString("select");
 		$("#myTabs li:eq("+select+") a").tab('show'); // Select third tab (0-indexed)
+		helloworld();
 	});
-	
 	function GetQueryString(name)//获取地址栏参数
 	{
 	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
