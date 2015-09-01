@@ -16,6 +16,7 @@
 <!-- Bootstrap -->
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
+<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -43,8 +44,8 @@ body{
 	background-color: #EBEAEB;
 }
 .row{
-	padding-left:8%;
-	padding-right:6%;
+	padding-left:150px;
+	padding-right:150px;
 }
 .left{
 	padding-right:15px;
@@ -127,11 +128,6 @@ body{
 		$("[data-toggle='tooltip']").tooltip(); 
 		var select=GetQueryString("select");
 		$("#myTabs li:eq("+select+") a").tab('show'); // Select third tab (0-indexed)
-		console.log("%c作为天使,是时候给你们看下我的翅膀了\n\n\n\n","color:#00c15a");
-		console.log("ʚ     ɞ");
-		console.log("%c", "padding:40px 20px 0px 10px;margin-left:8px;line-height:30px;background:url('http://static.tieba.baidu.com/tb/editor/images/client/image_emoticon28.png') no-repeat;");
-		console.log("ʚ     ɞ (:杨伟杰是傻逼)");
-		console.log("%c", "padding:40px 20px 0px 10px;margin-left:8px;line-height:20px;background:url('http://static.tieba.baidu.com/tb/editor/images/client/image_emoticon25.png') no-repeat;");
 	});
 	
 	function GetQueryString(name)//获取地址栏参数
