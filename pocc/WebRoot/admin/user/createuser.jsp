@@ -163,7 +163,6 @@ body {
 		while (num.length<4){
 			num="0"+num;
 		}
-		//alert(p+num);
 		return (p+num);
 	}
 	
@@ -177,7 +176,7 @@ body {
 						,document.getElementById("step2a").value);
 			d2.innerHTML="&nbsp;&nbsp;~&nbsp;&nbsp;";
 			d3.innerHTML=merge(document.getElementById("step1").value
-						,document.getElementById("step2bRes").value);
+						,document.getElementById("step2bRes").value-1);
 			
 			//d1.innerHTML="test";
 			return;
@@ -191,10 +190,10 @@ body {
 		//使用AJAX检查后台是否有重复账号
 		//alert("checkAccount");
 	}
-	//step 3 检查租期
-	function funStep3a(){
-		var v=document.getElementById("step3a").value;
-		var tip=document.getElementById("tip3a");
+	//step 3 检查开始租期
+	function funStep3a1(){
+		var v=document.getElementById("step3a1").value;
+		var tip=document.getElementById("tip3a1");
 		var reg=/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
 		tip.style.color="red";
 		if (reg.test(v)){
@@ -205,7 +204,20 @@ body {
 			return false;
 		}
 	}
-	
+	//step 3 检查结束租期
+	function funStep3a2(){
+		var v=document.getElementById("step3a2").value;
+		var tip=document.getElementById("tip3a2");
+		var reg=/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+		tip.style.color="red";
+		if (reg.test(v)){
+			tip.innerHTML="";
+			return true;
+		}else{
+			tip.innerHTML="无效的日期";
+			return false;
+		}
+	}	
 	//step 3  检查租期内费用
 	function funStep3b(){
 		var v=document.getElementById("step3b").value;
@@ -258,7 +270,7 @@ body {
 		//alert(document.getElementsByName("rent_end").item(0).value);
 		if (funStep1()&&
 		funStep2a()&&funStep2b()&&
-		funStep3a()&&funStep3b()&&funStep3c()&&funStep3d()){
+		funStep3a1()&&funStep3a2()&&funStep3b()&&funStep3c()&&funStep3d()){
 			//提交
 			var f=document.getElementById("form");
 			f.action="UserAction_Create.action";
@@ -348,27 +360,42 @@ body {
   			
   			<!--第三步-->
   			<div class="col-md-5">
-  					<h3>第三步&nbsp;&nbsp;<small>账号初始信息：</small></h3><br>
+  					<h3>第三步&nbsp;&nbsp;<small>账号初始信息：</small></h3>
   				<div class="col-md-offset-1">
+  				<div class="form-group">	
+  					<label class="col-md-3 control-label"><h5><small><em>学校名称：</em></small></h5></label>
+   	 				<div class="col-md-8">	
+   	 					<input name="unit" type="text" class="form-control" placeholder="如：华南师范大学">
+   	 					<small id=""></small>
+					</div>	
+				</div>
   				<div class="form-group">
-  					<label>到期时间<small><em>（允许登录并做实验的期限）</em></small></label>
-  					<br><div class="col-md-8">
-  						<input id="step3a" name="rent_end" type="date" class="form-control" value="2015-11-01" data-date-format="yyyy/mm/dd"
-  						onblur="funStep3a()">
-  						<small id="tip3a"></small>
+  					<label class="col-md-3 control-label"><h5><small><em>开始时间：</em></small></h5></label>
+  					<div class="col-md-8">
+  						<input id="step3a1" name="rent_start" type="date" class="form-control" value="2015-11-01" data-date-format="yyyy/mm/dd"
+  						onblur="funStep3a1()">
+  						<small id="tip3a1"></small>
+  					</div>	
+  				</div>
+  				<div class="form-group">
+  					<label class="col-md-3 control-label"><h5><small><em>到期时间：</em></small></h5></label>
+  					<div class="col-md-8">
+  						<input id="step3a2" name="rent_end" type="date" class="form-control" value="2015-12-01" data-date-format="yyyy/mm/dd"
+  						onblur="funStep3a2()">
+  						<small id="tip3a2"></small>
   					</div>	
   				</div>
    	 			<div class="form-group">
-   	 				<label>租期内费用<small><em>（单位：元）</em></small></label>
-   	 				<br><div class="col-md-8">
+   	 				<label class="col-md-4 control-label"><h5><small><em>租期费用（元）：</em></small></h5></label>
+   	 				<div class="col-md-6">
    	 					<input id="step3b" name="price" type="text" class="form-control" placeholder="大于0"
    	 					onblur="funStep3b()">
    	 					<small id="tip3b"></small>
   					</div>	
   				</div>	
   				<div class="form-group">
-  					<label>初始密码：</label>
-   	 				<br><div class="col-md-8">
+  					<label class="col-md-3 control-label"><h5><small><em>初始密码：</em></small></h5></label>
+   	 				<div class="col-md-8">
    	 					<input id="step3c" name="password1" type="text" class="form-control" placeholder="6~25个字母、数字或下划线"
    	 					onblur="funStep3c()">
    	 					<small id="tip3c"></small>
@@ -376,8 +403,8 @@ body {
   				</div>
   				
   				<div class="form-group">	
-  					<label>确认密码：</label>
-   	 				<br><div class="col-md-8">	
+  					<label class="col-md-3 control-label"><h5><small><em>确认密码：</em></small></h5></label>
+   	 				<div class="col-md-8">	
    	 					<input id="step3d" name="password2" type="text" class="form-control" placeholder="再次输入密码"
    	 					onblur="funStep3d()">
    	 					<small id="tip3d"></small>

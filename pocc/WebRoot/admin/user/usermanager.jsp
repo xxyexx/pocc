@@ -6,7 +6,21 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
-
+<%@page import="edu.scnu316.entity.User" %>
+<%@page import="java.util.List" %>
+<%
+	//生成用户列表
+	List<User> userList = null;
+	Integer p = 1;
+	if (session.getAttribute("pageNo") == null){
+		session.setAttribute("pageNo", p);
+		System.out.println("set pageNo = 1");
+	}
+	int pageNo=((Integer)session.getAttribute("pageNo")).intValue();
+	//User user = new User();
+	//user.setUser_account("test1230010");
+	//pageContext.setAttribute("modalUser", user);
+%>
 
 <!doctype html>
 <html>
@@ -19,7 +33,6 @@
 <!-- Bootstrap -->
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
-<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -32,7 +45,7 @@
 <meta http-equiv="pragma" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">
-<meta http-equiv="keywords" content="华南师范大学,实验平台,计算机组成原理">
+<meta http-equiv="keyword" content="华南师范大学,实验平台,计算机组成原理">
 <meta http-equiv="description" content="计算机组成原理实验平台">
 <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
@@ -91,19 +104,37 @@ body {
 	//初始函数
 	function startfun(){
 		<% User modal = (User) request.getAttribute("modalUser");
-			if (modal != null) {%>
-			//alert("startfun()");
+			String n;
+			if (modal != null) {
+				n=((String) request.getAttribute("nextUserID"));
+				System.out.println(n);
+			%>
 			$('#modal').modal('show');
 			
 		<%}%>
+		
+		var page=document.getElementById("pageNo");
+		page.value=<%=pageNo%>;
 	}
 	//选择展示在表格中的用户
 	function selectUser(){
-		//alert("selectUser()");
-		var form1=this.getElementById("selector");
+		var page=document.getElementById("pageNo");
+		var form1=document.getElementById("selector");		
 		form1.submit();
 	}
-	
+	//上一页，改变当前展示列表
+	function lastPage(){
+		var page=document.getElementById("pageNo");
+		page.value=parseInt(page.value)-1;
+		if (page.value<=0) page.value=1;
+		selectUser();
+	}
+	//下一页，改变当前展示列表
+	function nextPage(){
+		var page=document.getElementById("pageNo");
+		page.value=parseInt(page.value)+1;
+		selectUser();
+	}
 	
 	//删除选中的单个用户
 	function deleteUser(id){
@@ -119,12 +150,28 @@ body {
 	
 	//TODO
 	//批量删除选中用户
-	function deleteSelectedUser(id){
+	function deleteUsers(){
+		//TODO 询问是否确认删除
+		var list="";
+		var items=document.getElementsByName("mark");
+		for (var i=0; i<items.length; i++){
+			mark=items[i];
+			if (mark.checked){
+				list=list+mark.value+";";
+			}
+		}
+		//alert(list);
+		document.getElementById("deleteList").value=list;
+		document.getElementById("tableform").action="UserAction_batchDelete.action";
+		document.getElementById("tableform").submit();
+		//location.reload(true);  
+		//selectUser();
 	}
 	
 	//TODO
 	//选中全部用户
-	function selectAll(){
+	function selectAll(b){
+        	$(":checkbox").prop("checked", b);
 	}
 	
 	//用户新增、修改模态框
@@ -132,9 +179,20 @@ body {
 	//see saveModal()
 	function launchModal(id){
 		document.getElementById("user_id").value=id;
+		document.getElementById("next_user_id").value
+			=document.getElementById("next_"+id).value;
 		document.getElementById("tableform").action="UserAction_Show.action";
 		document.getElementById("tableform").submit();
-		//$('#modal').modal('show');
+		$('#modal').modal('show');
+	}
+	
+	//保存用户信息，打开下一条用户信息
+	function showNext(next)
+	{
+	
+		
+		//$("#updateForm").ajaxSubmit();
+		launchModal(next);
 	}
 	
 
@@ -146,15 +204,7 @@ body {
 <!--导入头部导航条-->
 <%@include file="../header.jsp" %>
 
-<%@page import="edu.scnu316.entity.User" %>
-<%@page import="java.util.List" %>
-<%
-	//生成用户列表
-	List<User> userList = null;
-	//User user = new User();
-	//user.setUser_account("test1230010");
-	//pageContext.setAttribute("modalUser", user);
-%>
+
 
 
 <div class="container-fluid">
@@ -190,6 +240,12 @@ body {
    					新增用户
 				</button>
 				</div>
+				<div class="form-group">
+	    			<label>页码：</label><br>
+	   	 			<div class="col-md-11">
+	    				<input id="pageNo" name="pageNo" class="form-control">
+	    			</div>
+	    		</div>
 			</form>
 	    </div>
 	    <!-- 用户查询框 -->
@@ -208,17 +264,25 @@ body {
 	    			<th>
 						<a><span style="font-size: large;"></span></a>
 						</th><th>
-						<button class="btn btn-danger btn-xs"><span
-						class="glyphicon glyphicon-trash"></span></button>
+						<button class="btn btn-danger btn-xs"
+							type="button"><span
+							class="glyphicon glyphicon-trash"
+							onclick="deleteUsers()">
+							</span></button>
 						</th><th>
-						<input type="checkbox">
+						<input onclick="selectAll(this.checked)" type="checkbox">
+						<input id="deleteList" name="deleteList" type="hidden">
 					</th>
 	    		</tr>
 	    	</thead>
 			<tbody>
 			<%  userList = (List<User>) session.getAttribute("userList");
 				if (userList!=null)
-				for (User u:userList){
+				for (int i=0; i<userList.size(); i++){
+				User u = userList.get(i);
+				User next = null;
+				if (i<userList.size()-1) next=userList.get(i+1);
+					else next=u;
 			%>
 				<tr>
 					<td><%=u.getUser_account() %></td>
@@ -234,13 +298,18 @@ body {
 						<button class="btn btn-danger btn-xs" onclick="deleteUser('<%=u.getUser_id()%>')">
 						<span class="glyphicon glyphicon-trash"></span></button>
 						</td><td>
-						<input type="checkbox">
+						<input name="mark" type="checkbox" value="<%=u.getUser_id() %>">
+						<input id="next_<%=u.getUser_id() %>" name="hidden" type="checkbox" value="<%=next.getUser_id()%>">
 					</td>
 				</tr>
 			<%} %>
 			</tbody>
 		</table>
+		
+		<button onclick="lastPage()" type="button" class="btn btn-default">上一页</button>
+		<button onclick="nextPage()" type="button" class="btn btn-default">下一页</button>
 		<input id="user_id" name="user_id" type="hidden"/>
+		<input id="next_user_id" name="next_user_id" type="hidden"/>
 			<%if (session.getAttribute("userList")==null){%> <h4>请选择实验用户</h4>
 			<%} %>
 		</form>
@@ -255,7 +324,7 @@ body {
 <!-- 用户修改、增加模态框 -->
 <s:if test="#request.modalUser!=null">
  
-<form action="UpdateAction.action" method="post" class="form-horizontal">
+<form id="updateForm" action="UpdateAction.action" method="post" class="form-horizontal">
 <div class="modal fade" id="modal" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -325,6 +394,7 @@ body {
     				value=<s:property value="#session.Role.user_account"/> >
     			<input name="user_id" type="hidden"
     				value=<s:property value="#request.modalUser.user_id"/> >
+
     			<div class="form-group">
    					<label class="col-md-4 control-label"><small>密码：</small></label>
    					<div class="col-md-8">
@@ -347,8 +417,8 @@ body {
       </div>
       <div class="modal-footer" style="text-align: rigth;">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button  class="btn btn-info">保存</button>
-        <button type="button" class="btn btn-primary">下一条</button>
+        <button type="submit" class="btn btn-info">保存</button>
+        <button onclick="showNext(<%=((String) request.getAttribute("nextUserID")) %>)" type="button" class="btn btn-primary">下一条</button>
       </div>
     </div>
   </div>

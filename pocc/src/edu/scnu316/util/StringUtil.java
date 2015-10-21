@@ -61,7 +61,7 @@ public class StringUtil {
 	 * @param time 输入时间，符合 "yyyy-MM-dd"或"yyyy/MM/dd"
 	 * @return Timestamp对象
 	 */
-	public static Timestamp StringTOTimestamp(String time){
+	public static Timestamp StringToTimestamp(String time){
 		String[] s = null;
 		if (time.contains("-")){
 			s = time.split("-");

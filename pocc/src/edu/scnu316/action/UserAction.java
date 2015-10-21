@@ -17,17 +17,23 @@ import edu.scnu316.util.StringUtil;
 public class UserAction extends ActionSupport {
 
 	private static final long serialVersionUID = 6627432641184163195L;
-
 	
+	//每页显示数据
+	private static final int pageSize = 12;
+
+	//用户访问DAO层
 	private UserService userService;	
 	private HttpServletRequest request; 	
 	
+	//用户id，用户展示用户、删除用户
 	private int user_id;
+	private int next_user_id;
 	
+	//用户生成信息：包括账号、租期、费用等
 	private String prefix;	
 	private int first;	
 	private int number;	
-	
+	private Timestamp rent_start;
 	private Timestamp rent_end;	
 	private String userName;
 	private String password;
@@ -35,8 +41,15 @@ public class UserAction extends ActionSupport {
 	private double price;
 	private String password1;
 	private String operator;
+	private String unit;
 	
+	
+	//用户删除列表，用户删除用户
+	private String deleteList;
 
+	//当前显示的页码
+	private int pageNo;
+	
 	/**
 	 * 构造方法
 	 */
@@ -52,8 +65,11 @@ public class UserAction extends ActionSupport {
 	public String Select(){
 		
 //		System.out.println("enter Select()");
+//		System.out.println(userService.getNumByFilter(null));
+		Integer page = getPageNo();
+		request.getSession().setAttribute("pageNo", page);
 		request.getSession().setAttribute("userList", 
-				userService.userFilter(null));
+				userService.userFilter(null, getPageNo(), pageSize));
 		return "usermanager.jsp";
 		
 	}
@@ -62,13 +78,12 @@ public class UserAction extends ActionSupport {
 	 * 使用弹出框展示用户
 	 */
 	public String Show(){
-//		System.out.println("enter Show()");
-//		System.out.println("request:"+ServletActionContext.getRequest().getParameter("user_id"));
-		
-//		System.out.println(getUser_id());
-//		int id = Integer.parseInt(ServletActionContext.getRequest().getParameter("user_id"));
+		//System.out.println("enter Show()");
+		//System.out.println("nextUserID:"+getNext_user_id());
 		request.setAttribute("modalUser", userService.getUserByID(getUser_id()));
+		request.setAttribute("nextUserID",String.valueOf(getNext_user_id()));
 		return "usermanager.jsp";
+		
 		
 	}
 	/**
@@ -107,10 +122,31 @@ public class UserAction extends ActionSupport {
 		request.getSession().setAttribute("deleteuser",deleteuser);
 		
 		//更新用户列表
-		this.Select();
 //		System.out.println("Select()后返回到Delete()");
-		return "usermanager.jsp";
+		return Select();
 	}
+	
+
+	/**
+	 * 批量删除用户，输入格式：
+	 * 若设置deleteList="1;3;5;7;9;"则删除id为1,3,5,7,9的用户
+	 */
+	public String batchDelete(){
+		
+		//System.out.println("enter batchDelete()");
+		String[] list=getDeleteList().split(";");
+		//System.out.println(getDeleteList());
+		//System.out.println(list);
+		for (String i:list){
+			//System.out.println(i);
+			//System.out.println(userService.deleteUser(Integer.valueOf(i)));
+			userService.deleteUser(Integer.valueOf(i));
+		}
+		
+		return Select();
+		
+	}
+	
 	
 	/**
 	 * 批量创建用户,完成后转到用户管理页面可直接查询到已创建用户<br>
@@ -118,9 +154,12 @@ public class UserAction extends ActionSupport {
 	 */
 	public String Create(){
 
-//		System.out.println("enter BatchCreate()");
+		//System.out.println("enter BatchCreate()");
 		User model = new User();
+		//System.out.println("unit="+getUnit());
+		model.setUnit_name(getUnit());
 		model.setPassword(MD5Util.md5Encode(getPassword1()));
+		model.setRent_start(getRent_start());
 		model.setRent_end(getRent_end());
 		model.setPrice(getPrice());
 		model.setOperator(getOperator());
@@ -129,6 +168,8 @@ public class UserAction extends ActionSupport {
 		return "usermanager.jsp";
 	}
 
+	
+	
 	public String getPrefix() {
 		return prefix;
 	}
@@ -157,20 +198,9 @@ public class UserAction extends ActionSupport {
 		return rent_end;
 	}
 
-//	public String getUser_id() {
-//		return  user_id;
-//	}
-
-//	public void setUser_id(int user_id) {
-//		System.out.println("enter setUser_id");
-//		System.out.println(user_id);
-//		this.user_id = user_id;
-//	}
-//	public void setUser_id(String str_id){
-//		
-//		System.out.println("enter setUser_id string");
-//		this.user_id=str_id;
-//	}
+	public Timestamp getRent_start() {
+		return rent_start;
+	}
 
 	public String getUserName() {
 		return userName;
@@ -207,8 +237,15 @@ public class UserAction extends ActionSupport {
 
 
 	public void setRent_end(String str_rent_end) {		
-		this.rent_end = StringUtil.StringTOTimestamp(str_rent_end);		
+		this.rent_end = StringUtil.StringToTimestamp(str_rent_end);		
 	}
+	
+
+
+	public void setRent_start(String str_rent_start) {
+		this.rent_start = StringUtil.StringToTimestamp(str_rent_start);
+	}
+
 
 		
 	public String getPassword1() {
@@ -238,6 +275,48 @@ public class UserAction extends ActionSupport {
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
+
+
+	public int getNext_user_id() {
+		return next_user_id;
+	}
+
+
+	public void setNext_user_id(int next_user_id) {
+		this.next_user_id = next_user_id;
+	}
+
+
+	public String getDeleteList() {
+		return deleteList;
+	}
+
+
+	public void setDeleteList(String deleteList) {
+		this.deleteList = deleteList;
+	}
+
+
+	public int getPageNo() {
+		return pageNo;
+	}
+
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+
+	public String getUnit() {
+		return unit;
+	}
+
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+
 
 
 

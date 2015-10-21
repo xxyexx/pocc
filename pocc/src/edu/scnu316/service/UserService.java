@@ -69,10 +69,19 @@ public interface UserService {
 	 * 2、用户单位与模板单位相同；<br>
 	 * 3、用户锁定状态与模板锁定状态相同；<br>
 	 * </pre></blockquote>
-	 * @param model	用户模板
+	 * @param model	用户模板 
+	 * @param pageNo 当前页数
+	 * @param pageSize 分页大小
 	 * @return 符合条件的用户列表
 	 */
-	public List<User> userFilter(User model);
+	public List<User> userFilter(User model,int pageNo,int pageSize);
+	
+	/**
+	 * 统计符合模板的用户数量
+	 * @param model 用户模板
+	 * @return 符合要求个数
+	 */
+	public int getNumByFilter(User model);
 	
 	/**
 	 * 根据用户ID，删除指定用户
@@ -81,6 +90,8 @@ public interface UserService {
 	 * 		   false 删除失败
 	 */
 	public boolean deleteUser(int user_id);
+	
+	
 	
 	/**根据用户ID返回用户
 	 * @param user_id

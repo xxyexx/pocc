@@ -74,10 +74,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> userFilter(User model) {
+	public List<User> userFilter(User model,int pageNo,int pageSize) {
 		// TODO Auto-generated method stub
-		return UserDAO.getInstance.queryAll();
+		
+		return UserDAO.getInstance.queryByFilter(model, pageNo, pageSize);
 	}
+	
+	
+
 
 	@Override
 	public boolean deleteUser(int user_id) {
@@ -123,6 +127,12 @@ public class UserServiceImpl implements UserService{
 	public boolean updateUser(User user) {
 		// TODO Auto-generated method stub
 		return UserDAO.getInstance.update(user);
+	}
+
+	@Override
+	public int getNumByFilter(User model) {
+		return UserDAO.getInstance.getNumByFilter(model);
+		
 	}
 }
 

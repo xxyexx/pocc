@@ -148,4 +148,25 @@ public class UserDAO implements BaseDAO<User>{
 			List<User> users = query.list();
 		return users;
 	}
+	
+
+	
+	public List<User> queryByFilter(User user, int pageNo, int pageSize){
+		//用户过滤功能待完成
+		String hql = "from user_inf";
+		Query query = sess.createQuery(hql);    
+	    query.setFirstResult((pageNo-1)*pageSize);
+	    query.setMaxResults(pageSize);
+	    @SuppressWarnings("unchecked")
+		List<User> users = query.list();
+		return users;
+	}
+	
+	public int getNumByFilter(User user){
+		
+		String hql = "select count(1) from user_inf";
+		Query query = sess.createQuery(hql);
+	    return  ((Number)(query.iterate().next())).intValue();
+	}
+
 }

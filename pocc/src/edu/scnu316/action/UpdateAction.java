@@ -88,7 +88,7 @@ public class UpdateAction extends ActionSupport {
 	}
 
 	public void setM_rent_start(String str_rent_start) {
-		this.m_rent_start = StringUtil.StringTOTimestamp(str_rent_start);
+		this.m_rent_start = StringUtil.StringToTimestamp(str_rent_start);
 	}
 
 	public Timestamp getM_rent_end() {
@@ -96,7 +96,7 @@ public class UpdateAction extends ActionSupport {
 	}
 
 	public void setM_rent_end(String str_rent_end) {
-		this.m_rent_end = StringUtil.StringTOTimestamp(str_rent_end);
+		this.m_rent_end = StringUtil.StringToTimestamp(str_rent_end);
 	}
 
 	public double getM_price() {
@@ -112,7 +112,7 @@ public class UpdateAction extends ActionSupport {
 	}
 
 	public void setM_pay_date(String str_pay_date) {
-		this.m_pay_date = StringUtil.StringTOTimestamp(str_pay_date);
+		this.m_pay_date = StringUtil.StringToTimestamp(str_pay_date);
 	}
 
 	public String getM_operator() {
