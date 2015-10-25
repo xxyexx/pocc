@@ -9,6 +9,7 @@ public class MD5Util {
 	 */
 	public static String md5Encode(String plainText) {
 		String re_md5 = new String();
+		//System.out.println("使用MD5加密："+plainText);
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			md.update(plainText.getBytes());

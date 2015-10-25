@@ -14,9 +14,10 @@
 	Integer p = 1;
 	if (session.getAttribute("pageNo") == null){
 		session.setAttribute("pageNo", p);
-		System.out.println("set pageNo = 1");
+		
 	}
 	int pageNo=((Integer)session.getAttribute("pageNo")).intValue();
+	if (pageNo<=0) pageNo=1;
 	//User user = new User();
 	//user.setUser_account("test1230010");
 	//pageContext.setAttribute("modalUser", user);
@@ -106,8 +107,7 @@ body {
 		<% User modal = (User) request.getAttribute("modalUser");
 			String n;
 			if (modal != null) {
-				n=((String) request.getAttribute("nextUserID"));
-				System.out.println(n);
+				//n=((String) request.getAttribute("nextUserID"));
 			%>
 			$('#modal').modal('show');
 			
@@ -156,11 +156,14 @@ body {
 		var items=document.getElementsByName("mark");
 		for (var i=0; i<items.length; i++){
 			mark=items[i];
+			mark.disabled="true";
 			if (mark.checked){
 				list=list+mark.value+";";
 			}
 		}
+		if (list=="") return;
 		//alert(list);
+		document.getElementById("user_id").disabled=true;
 		document.getElementById("deleteList").value=list;
 		document.getElementById("tableform").action="UserAction_batchDelete.action";
 		document.getElementById("tableform").submit();
@@ -179,21 +182,19 @@ body {
 	//see saveModal()
 	function launchModal(id){
 		document.getElementById("user_id").value=id;
-		document.getElementById("next_user_id").value
-			=document.getElementById("next_"+id).value;
 		document.getElementById("tableform").action="UserAction_Show.action";
 		document.getElementById("tableform").submit();
 		$('#modal').modal('show');
 	}
 	
 	//保存用户信息，打开下一条用户信息
-	function showNext(next)
-	{
+	//function showNext(next)
+	//{
 	
 		
 		//$("#updateForm").ajaxSubmit();
-		launchModal(next);
-	}
+	//	launchModal(next);
+	//}
 	
 
 	
@@ -280,9 +281,9 @@ body {
 				if (userList!=null)
 				for (int i=0; i<userList.size(); i++){
 				User u = userList.get(i);
-				User next = null;
-				if (i<userList.size()-1) next=userList.get(i+1);
-					else next=u;
+				//User next = null;
+				//if (i<userList.size()-1) next=userList.get(i+1);
+				//	else next=u;
 			%>
 				<tr>
 					<td><%=u.getUser_account() %></td>
@@ -298,9 +299,8 @@ body {
 						<button class="btn btn-danger btn-xs" onclick="deleteUser('<%=u.getUser_id()%>')">
 						<span class="glyphicon glyphicon-trash"></span></button>
 						</td><td>
-						<input name="mark" type="checkbox" value="<%=u.getUser_id() %>">
-						<input id="next_<%=u.getUser_id() %>" name="hidden" type="checkbox" value="<%=next.getUser_id()%>">
-					</td>
+						<input name="mark" type="checkbox"  value="<%=u.getUser_id() %>">
+						</td>
 				</tr>
 			<%} %>
 			</tbody>
@@ -309,7 +309,6 @@ body {
 		<button onclick="lastPage()" type="button" class="btn btn-default">上一页</button>
 		<button onclick="nextPage()" type="button" class="btn btn-default">下一页</button>
 		<input id="user_id" name="user_id" type="hidden"/>
-		<input id="next_user_id" name="next_user_id" type="hidden"/>
 			<%if (session.getAttribute("userList")==null){%> <h4>请选择实验用户</h4>
 			<%} %>
 		</form>
@@ -418,7 +417,9 @@ body {
       <div class="modal-footer" style="text-align: rigth;">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         <button type="submit" class="btn btn-info">保存</button>
+        <!-- 
         <button onclick="showNext(<%=((String) request.getAttribute("nextUserID")) %>)" type="button" class="btn btn-primary">下一条</button>
+         -->
       </div>
     </div>
   </div>

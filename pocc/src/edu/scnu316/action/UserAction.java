@@ -27,7 +27,7 @@ public class UserAction extends ActionSupport {
 	
 	//用户id，用户展示用户、删除用户
 	private int user_id;
-	private int next_user_id;
+//	private int next_user_id;
 	
 	//用户生成信息：包括账号、租期、费用等
 	private String prefix;	
@@ -81,7 +81,7 @@ public class UserAction extends ActionSupport {
 		//System.out.println("enter Show()");
 		//System.out.println("nextUserID:"+getNext_user_id());
 		request.setAttribute("modalUser", userService.getUserByID(getUser_id()));
-		request.setAttribute("nextUserID",String.valueOf(getNext_user_id()));
+//		request.setAttribute("nextUserID",String.valueOf(getNext_user_id()));
 		return "usermanager.jsp";
 		
 		
@@ -158,7 +158,7 @@ public class UserAction extends ActionSupport {
 		User model = new User();
 		//System.out.println("unit="+getUnit());
 		model.setUnit_name(getUnit());
-		model.setPassword(MD5Util.md5Encode(getPassword1()));
+		model.setPassword(getPassword1());
 		model.setRent_start(getRent_start());
 		model.setRent_end(getRent_end());
 		model.setPrice(getPrice());
@@ -277,14 +277,14 @@ public class UserAction extends ActionSupport {
 	}
 
 
-	public int getNext_user_id() {
-		return next_user_id;
-	}
-
-
-	public void setNext_user_id(int next_user_id) {
-		this.next_user_id = next_user_id;
-	}
+//	public int getNext_user_id() {
+//		return next_user_id;
+//	}
+//
+//
+//	public void setNext_user_id(int next_user_id) {
+//		this.next_user_id = next_user_id;
+//	}
 
 
 	public String getDeleteList() {
