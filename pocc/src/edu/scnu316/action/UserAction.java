@@ -1,6 +1,8 @@
 package edu.scnu316.action;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +13,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import edu.scnu316.entity.User;
 import edu.scnu316.service.UserService;
 import edu.scnu316.service.impl.UserServiceImpl;
+import edu.scnu316.util.CityUtil;
 import edu.scnu316.util.MD5Util;
 import edu.scnu316.util.StringUtil;
 
@@ -27,7 +30,7 @@ public class UserAction extends ActionSupport {
 	
 	//用户id，用户展示用户、删除用户
 	private int user_id;
-//	private int next_user_id;
+	private int next_user_id;
 	
 	//用户生成信息：包括账号、租期、费用等
 	private String prefix;	
@@ -49,15 +52,38 @@ public class UserAction extends ActionSupport {
 
 	//当前显示的页码
 	private int pageNo;
+	private String schoolName;//当前学校的名字
+	
+	private String provinceName;//ajax传入的省份
+	private Map<String,String> schoolMap;//ajax返回的学校列表
 	
 	/**
 	 * 构造方法
+	 * @throws UnsupportedEncodingException 
 	 */
-	public UserAction(){
+	public UserAction() throws UnsupportedEncodingException{
 		this.userService = new UserServiceImpl();
 		this.request = ServletActionContext.getRequest();
+		request.setCharacterEncoding("utf-8");
+		request.getSession().setAttribute("provincevalue", -1);//默认省份
+		request.getSession().setAttribute("schoolvalue", "不限");//默认学校
 	}
-	
+	/**
+	 * 一开始加载界面就要保存Province到request
+	 */
+	public String ShowProvince(){
+		//设置城市列表
+		Map<Integer,String> provinceMap = CityUtil.getProvince_all();
+		request.setAttribute("ProvinceMap", provinceMap);
+		return "usermanager.jsp";
+	}
+	/**
+	 * Ajax传入provinceName获取school列表
+	 */
+	public String getSchool(){
+		schoolMap = CityUtil.getSchool_all(provinceName);
+		return "getSchoolAjax";
+	}
 	
 	/**
 	 * 选择展示列表中的用户
@@ -68,10 +94,19 @@ public class UserAction extends ActionSupport {
 //		System.out.println(userService.getNumByFilter(null));
 		Integer page = getPageNo();
 		request.getSession().setAttribute("pageNo", page);
+		User model= new User();
+		model.setUnit_name(schoolName);//学校
 		request.getSession().setAttribute("userList", 
-				userService.userFilter(null, getPageNo(), pageSize));
+				userService.userFilter(model, getPageNo(), pageSize));
+		request.getSession().setAttribute("schoolvalue", schoolName);//保存学校
+		//保存省份id
+		if(!schoolName.equals("不限")){
+			request.getSession().setAttribute("provincevalue", CityUtil.getProvince_idBySchoolName(schoolName));
+		}else{
+			request.getSession().setAttribute("provincevalue", -1);
+		}
+		ShowProvince();
 		return "usermanager.jsp";
-		
 	}
 	
 	/**
@@ -81,7 +116,7 @@ public class UserAction extends ActionSupport {
 		//System.out.println("enter Show()");
 		//System.out.println("nextUserID:"+getNext_user_id());
 		request.setAttribute("modalUser", userService.getUserByID(getUser_id()));
-//		request.setAttribute("nextUserID",String.valueOf(getNext_user_id()));
+		request.setAttribute("nextUserID",String.valueOf(getNext_user_id()));
 		return "usermanager.jsp";
 		
 		
@@ -158,7 +193,7 @@ public class UserAction extends ActionSupport {
 		User model = new User();
 		//System.out.println("unit="+getUnit());
 		model.setUnit_name(getUnit());
-		model.setPassword(getPassword1());
+		model.setPassword(MD5Util.md5Encode(getPassword1()));
 		model.setRent_start(getRent_start());
 		model.setRent_end(getRent_end());
 		model.setPrice(getPrice());
@@ -277,14 +312,14 @@ public class UserAction extends ActionSupport {
 	}
 
 
-//	public int getNext_user_id() {
-//		return next_user_id;
-//	}
-//
-//
-//	public void setNext_user_id(int next_user_id) {
-//		this.next_user_id = next_user_id;
-//	}
+	public int getNext_user_id() {
+		return next_user_id;
+	}
+
+
+	public void setNext_user_id(int next_user_id) {
+		this.next_user_id = next_user_id;
+	}
 
 
 	public String getDeleteList() {
@@ -314,6 +349,26 @@ public class UserAction extends ActionSupport {
 
 	public void setUnit(String unit) {
 		this.unit = unit;
+	}
+	
+	
+	public String getSchoolName() {
+		return schoolName;
+	}
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
+	public String getProvinceName() {
+		return provinceName;
+	}
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+	public Map<String, String> getSchoolMap() {
+		return schoolMap;
+	}
+	public void setSchoolMap(Map<String, String> schoolMap) {
+		this.schoolMap = schoolMap;
 	}
 
 

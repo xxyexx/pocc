@@ -12,8 +12,6 @@ import edu.scnu316.util.StringUtil;
 /**
  * 实验用户
  */
-
-
 @Entity(name="user_inf")
 public class User implements Cloneable{
 
@@ -54,7 +52,6 @@ public class User implements Cloneable{
 		this.sex = "保密";
 		this.age = "保密";
 		this.city_id = 0;
-		this.setLock_mode("UNLOCK");
 		//默认头像设置
 		this.icon_url = "image/UserDefaultPic3.jpg";
 
@@ -83,12 +80,6 @@ public class User implements Cloneable{
 	public String getPassword() {
 		return password;
 	}
-	
-	
-	/**
-	 * 使用MD5加密：保证password没有经过加密
-	 * @param password 没有经过加密的密码
-	 */
 	public void setPassword(String password) {
 		this.password = MD5Util.md5Encode(password);//这里要转md5
 	}
@@ -293,7 +284,13 @@ public class User implements Cloneable{
 	public String getProvince_name(){
 		return CityUtil.getProvince_name(this.city_id);
 	}
-	
+	/**
+	 * 返回用户所属城市名的id
+	 * @return 如"广东省=19"
+	 */
+	public int getProvince_id(){
+		return CityUtil.getProvince_id(getProvince_name());
+	}
 
 ///***************************************************************///	
 ////////////////////////////////////////////////////////////////////

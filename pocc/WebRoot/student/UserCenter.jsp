@@ -51,7 +51,7 @@ body{
 			//通过省份ID获取city数据
 			$.ajax({
 				url : "UserCenterChangeCity.action",
-				type : "post",
+				type :"post",
 				data :{provinceName:provincename,},
 				success : function(data) {
 					setCityList(data);

@@ -53,6 +53,7 @@ public class UserCenterAction extends ActionSupport {
 	public String Show(){
 		Map<Integer,String> provinceMap = CityUtil.getProvince_all();
 		request.setAttribute("ProvinceMap", provinceMap);
+		System.out.println(user.getProvince_name());
 		return "UserCenter.jsp";
 	}
 	/**

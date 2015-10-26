@@ -96,6 +96,33 @@ public class CityUtil {
 		}
 		return ProviceMap;
 	}
+	/**
+	 * 通过省份名获得该省所有学校名
+	 * @param province_name 省名，如  "广东省"
+	 * @return	该省对应的所有学校名
+	 */
+	public static Map <String,String> getSchool_all(String province_name) {
+		List<String> list = new ArrayList<String>();
+		list.clear();
+		String sql1 = "select p.id from province p where p.province='"+province_name+"'";
+		String pid = String.valueOf(sess.createSQLQuery(sql1).list().get(0));
+		//System.out.println(pid);
+		String sql2 = "SELECT school_name FROM school where school_pro_id="+pid;
+		list = (List<String>) sess.createSQLQuery(sql2).list();
+		Map <String,String> SchoolMap = new HashMap<String, String>();//键值都是Schoolname
+		for(int i=0;i<list.size();i++){
+			SchoolMap.put(list.get(i), list.get(i));
+		}
+		return SchoolMap;
+	}
+	/**
+	 * 通过学校名获得省份id
+	 */
+	public static int getProvince_idBySchoolName(String school_name){
+		sql = "select school_pro_id from school where school_name='"+school_name+"'";		
+		int res = Integer.parseInt(sess.createSQLQuery(sql).list().get(0).toString());
+		return res;		
+	}
 }
 
 

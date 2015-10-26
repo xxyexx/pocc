@@ -14,10 +14,9 @@
 	Integer p = 1;
 	if (session.getAttribute("pageNo") == null){
 		session.setAttribute("pageNo", p);
-		
+		System.out.println("set pageNo = 1");
 	}
 	int pageNo=((Integer)session.getAttribute("pageNo")).intValue();
-	if (pageNo<=0) pageNo=1;
 	//User user = new User();
 	//user.setUser_account("test1230010");
 	//pageContext.setAttribute("modalUser", user);
@@ -107,7 +106,8 @@ body {
 		<% User modal = (User) request.getAttribute("modalUser");
 			String n;
 			if (modal != null) {
-				//n=((String) request.getAttribute("nextUserID"));
+				n=((String) request.getAttribute("nextUserID"));
+				System.out.println(n);
 			%>
 			$('#modal').modal('show');
 			
@@ -156,14 +156,11 @@ body {
 		var items=document.getElementsByName("mark");
 		for (var i=0; i<items.length; i++){
 			mark=items[i];
-			mark.disabled="true";
 			if (mark.checked){
 				list=list+mark.value+";";
 			}
 		}
-		if (list=="") return;
 		//alert(list);
-		document.getElementById("user_id").disabled=true;
 		document.getElementById("deleteList").value=list;
 		document.getElementById("tableform").action="UserAction_batchDelete.action";
 		document.getElementById("tableform").submit();
@@ -182,22 +179,69 @@ body {
 	//see saveModal()
 	function launchModal(id){
 		document.getElementById("user_id").value=id;
+		document.getElementById("next_user_id").value
+			=document.getElementById("next_"+id).value;
 		document.getElementById("tableform").action="UserAction_Show.action";
 		document.getElementById("tableform").submit();
 		$('#modal').modal('show');
 	}
 	
 	//保存用户信息，打开下一条用户信息
-	//function showNext(next)
-	//{
+	function showNext(next)
+	{
 	
 		
 		//$("#updateForm").ajaxSubmit();
-	//	launchModal(next);
-	//}
+		launchModal(next);
+	}
 	
 
-	
+
+
+	$(function(){
+		//获取学校列表
+		changeSchool();
+	});
+	//搜索条件，显示学校
+	function changeSchool(){//获取学校列表
+		var provincename = $("#province option:selected").text();
+		if(provincename!="-请选择省份-"){
+			//通过省份ID获取city数据
+			$.ajax({
+				url : "UserAction_getSchool.action",
+				type :"post",
+				data :{provinceName:provincename,},
+				success : function(data) {
+					setSchoolList(data);
+				}
+			});
+		}else{
+			$("#school").empty();
+			$("#school").append("<option value='不限'>--</option>");
+		}
+	}
+	function setSchoolList(schoolList){//设置学校列表
+		var schoolname = "${session.schoolvalue}";
+		$("#school").empty();
+		if(getJsonLength(schoolList)!=0){
+			for(var schoolName in schoolList){
+				if(schoolname==schoolList[schoolName]){
+					$("#school").append("<option value='"+schoolName+"' selected='selected'>"+schoolList[schoolName]+"</option>");
+				}else{
+				$("#school").append("<option value='"+schoolName+"'>"+schoolList[schoolName]+"</option>");
+				}
+			}
+		}else{
+			$("#school").append("<option value='不限'>不限</option>");
+		}
+	}
+	function getJsonLength(jsonData){//计算json长度
+		var jsonLength = 0;
+		for(var item in jsonData){
+			jsonLength++;
+		}
+		return jsonLength;
+	}
 </script>
 
 <body onload="startfun()">
@@ -224,19 +268,25 @@ body {
 	    
 	    <!-- 用户查询框 -->
 	    <div class="col-md-2" onload="selectUser()">
-	    	<form action="UserAction_Select.action" class="form-horizontal" id="selector" method="post"
-	    		style="">
+	    	<form action="UserAction_Select.action" class="form-horizontal" id="selector" method="post">
 	    		<div class="form-group">
-	    			<label>单位：</label><br>
+	    			<label class="control-label">单位：</label><br>
 	   	 			<div class="col-md-11">
-	    				<input class="form-control">
+					<s:select id="province" list="#request.ProvinceMap" 
+							  listKey="key" listValue="value" headerKey="-1" headerValue="-请选择省份-" 
+							  value="%{#session.provincevalue}" onchange="changeSchool()">
+					</s:select>	  
+					<br/><br/>
+					 <select name="schoolName" id="school" class="col-md-12">
+				    	<option value="不限">--</option>
+				    </select>  			
 	    			</div>
 	    		</div>
 	    		<div class="form-group">
-	    		<button class="btn btn-success" onclick="selectUser()">查询用户</button>
+	    		<button class="btn btn-success col-md-9 col-md-offset-1" onclick="selectUser()">查询用户</button>
 	    		</div>.
 	    		<div class="form-group">
-				<button class="btn btn-primary" type="button"
+				<button class="btn btn-primary col-md-9 col-md-offset-1" type="button"
 					onclick="window.location.href='CreateUser.action'">
    					新增用户
 				</button>
@@ -278,12 +328,12 @@ body {
 	    	</thead>
 			<tbody>
 			<%  userList = (List<User>) session.getAttribute("userList");
-				if (userList!=null)
+				if (userList!=null&&userList.size()!=0){
 				for (int i=0; i<userList.size(); i++){
 				User u = userList.get(i);
-				//User next = null;
-				//if (i<userList.size()-1) next=userList.get(i+1);
-				//	else next=u;
+				User next = null;
+				if (i<userList.size()-1) next=userList.get(i+1);
+					else next=u;
 			%>
 				<tr>
 					<td><%=u.getUser_account() %></td>
@@ -299,9 +349,12 @@ body {
 						<button class="btn btn-danger btn-xs" onclick="deleteUser('<%=u.getUser_id()%>')">
 						<span class="glyphicon glyphicon-trash"></span></button>
 						</td><td>
-						<input name="mark" type="checkbox"  value="<%=u.getUser_id() %>">
-						</td>
+						<input name="mark" type="checkbox" value="<%=u.getUser_id() %>">
+						<input id="next_<%=u.getUser_id() %>" name="hidden" type="checkbox" value="<%=next.getUser_id()%>">
+					</td>
 				</tr>
+			<%}}else{%>
+				<tr><td>没有搜索到相关的学生列表</td></tr>
 			<%} %>
 			</tbody>
 		</table>
@@ -309,6 +362,7 @@ body {
 		<button onclick="lastPage()" type="button" class="btn btn-default">上一页</button>
 		<button onclick="nextPage()" type="button" class="btn btn-default">下一页</button>
 		<input id="user_id" name="user_id" type="hidden"/>
+		<input id="next_user_id" name="next_user_id" type="hidden"/>
 			<%if (session.getAttribute("userList")==null){%> <h4>请选择实验用户</h4>
 			<%} %>
 		</form>
@@ -417,9 +471,7 @@ body {
       <div class="modal-footer" style="text-align: rigth;">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
         <button type="submit" class="btn btn-info">保存</button>
-        <!-- 
         <button onclick="showNext(<%=((String) request.getAttribute("nextUserID")) %>)" type="button" class="btn btn-primary">下一条</button>
-         -->
       </div>
     </div>
   </div>

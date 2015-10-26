@@ -7,7 +7,6 @@ import org.hibernate.Transaction;
 
 import edu.scnu316.util.CityUtil;
 import edu.scnu316.util.HibernateUtil;
-import edu.scnu316.dao.CourseDAO;
 import edu.scnu316.dao.RoleDAO;
 import edu.scnu316.dao.UnitDAO;
 import edu.scnu316.dao.UserDAO;
@@ -19,17 +18,11 @@ public class HibernateTest {
 	
 	public static void main(String args[]){
 		
-		new HibernateTest().CourseTest();
 //		new HibernateTest().UnitTest();
-//		new HibernateTest().UserTest();
+		new HibernateTest().UserTest();
 //		new HibernateTest().RoleTest();
 //		new HibernateTest().CityTest();
 	}
-	private void CourseTest(){
-		Course c = CourseDAO.getInstance.queryByID(1);
-		System.out.println(c.getCourse_require());
-	}
-	
 	private void UserTest(){
 		User u = UserDAO.getInstance.queryByID(1);
 //		u.setUsername("小白");

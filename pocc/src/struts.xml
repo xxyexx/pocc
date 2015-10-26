@@ -37,15 +37,19 @@
     		<interceptor-ref name="AdminInterceptor"></interceptor-ref>
     		<result>/admin/user/createuser.jsp</result>
     	</action>
-    	<action name="UserManager">
-    		<result>/admin/user/usermanager.jsp</result>
-    	</action>
     	<action name="RoleManager">
 	   		<result>/admin/role/rolemanager.jsp</result>
 	   	</action>
+	   	<action name="UserManager" class="edu.scnu316.action.UserAction" method="ShowProvince">
+    		<result name="usermanager.jsp">/admin/user/usermanager.jsp</result>
+    	</action>
     	<action name="UserAction_*" class="edu.scnu316.action.UserAction" method="{1}">
 	   		<result name="usermanager.jsp">/admin/user/usermanager.jsp</result>
 	   		<result name="createuser.jsp">/admin/user/createuser.jsp</result>
+	   		<result name="getSchoolAjax" type="json">
+	    		<!-- 这里指定将被Struts2序列化的属性，该属性在action中必须有对应的getter方法 -->
+	    		<param name="root">schoolMap</param>
+    		</result>
 	   	</action>
 	   	<action name="UpdateAction" class="edu.scnu316.action.UpdateAction" method="Update">
 	   		<result name="usermanager.jsp">/admin/user/usermanager.jsp</result>

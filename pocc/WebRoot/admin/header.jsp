@@ -62,7 +62,7 @@
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse header" role="navigation">
     <ul class="nav navbar-nav navbar-right ">
-     	 <li><a href="##" class='glyphicon glyphicon-info-sign' aria-hidden=true></a></li>
+     	 <li><a class='glyphicon glyphicon-info-sign' aria-hidden=true></a></li>
         <li class="dropdown">
            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
            <span class='glyphicon glyphicon-user' aria-hidden=true></span>&nbsp;&nbsp;欢迎您：<s:property value="#session.Role.user_account"></s:property><span class="caret"></span></a>

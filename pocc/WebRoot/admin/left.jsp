@@ -40,6 +40,7 @@
 	float:left;
 }
 .second_li{
+	background-color: #171d1f !important;
 	min-width: 50px !important;
 	height:50px !important;
 	font-size:8px !important;

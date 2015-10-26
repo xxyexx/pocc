@@ -151,9 +151,14 @@ public class UserDAO implements BaseDAO<User>{
 	
 
 	
-	public List<User> queryByFilter(User user, int pageNo, int pageSize){
+	public List<User> queryByFilter(User model, int pageNo, int pageSize){
 		//用户过滤功能待完成
-		String hql = "from user_inf";
+		String hql=null;
+		if(model.getUnit_name().equals("不限")){
+			hql = "from user_inf";
+		}else if(model.getUnit_name()!=""){
+			hql = "SELECT ui FROM user_inf ui WHERE ui.unit_name='"+model.getUnit_name()+"'";
+		}
 		Query query = sess.createQuery(hql);    
 	    query.setFirstResult((pageNo-1)*pageSize);
 	    query.setMaxResults(pageSize);
