@@ -156,6 +156,7 @@ body {
 		var items=document.getElementsByName("mark");
 		for (var i=0; i<items.length; i++){
 			mark=items[i];
+			mark.disabled="true";
 			if (mark.checked){
 				list=list+mark.value+";";
 			}
@@ -199,6 +200,7 @@ body {
 
 
 	$(function(){
+	 	$('[data-toggle="tooltip"]').tooltip();
 		//获取学校列表
 		changeSchool();
 	});
@@ -292,6 +294,9 @@ body {
 				</button>
 				</div>
 				<div class="form-group">
+					<a href="fileDownload.action" class="btn btn-primary col-md-9 col-md-offset-1" data-toggle="tooltip" data-placement="right" title="导出当前选择学校学生excel表">导出excel</a>
+				</div>
+				<div class="form-group">
 	    			<label>页码：</label><br>
 	   	 			<div class="col-md-11">
 	    				<input id="pageNo" name="pageNo" class="form-control">
@@ -350,7 +355,6 @@ body {
 						<span class="glyphicon glyphicon-trash"></span></button>
 						</td><td>
 						<input name="mark" type="checkbox" value="<%=u.getUser_id() %>">
-						<input id="next_<%=u.getUser_id() %>" name="hidden" type="checkbox" value="<%=next.getUser_id()%>">
 					</td>
 				</tr>
 			<%}}else{%>
@@ -362,7 +366,6 @@ body {
 		<button onclick="lastPage()" type="button" class="btn btn-default">上一页</button>
 		<button onclick="nextPage()" type="button" class="btn btn-default">下一页</button>
 		<input id="user_id" name="user_id" type="hidden"/>
-		<input id="next_user_id" name="next_user_id" type="hidden"/>
 			<%if (session.getAttribute("userList")==null){%> <h4>请选择实验用户</h4>
 			<%} %>
 		</form>

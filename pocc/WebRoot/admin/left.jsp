@@ -74,7 +74,6 @@
 		    <a href="CreateUser.action" class="second_li">实验用户批量生成</a>
 	        <a href="UserManager.action" class="second_li">实验用户管理</a>
 	        <a class="second_li">实验用户状态统计</a>
-	        <a class="second_li">批量实验用户导出</a>
 		</div>
     </li>
     <li><a role="button" data-toggle="collapse" href="#collapse2" aria-expanded="false" aria-controls="collapseExample">
@@ -82,7 +81,6 @@
     	</a>
         <div class="collapse" id="collapse2">
 		    <a href="RoleManager.action" class="second_li">管理员用户管理</a>
-		    <a class="second_li">实验用户管理</a>
 		</div>
     </li>
     <li><a role="button" data-toggle="collapse" href="#collapse3" aria-expanded="false" aria-controls="collapseExample">

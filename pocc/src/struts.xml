@@ -51,6 +51,13 @@
 	    		<param name="root">schoolMap</param>
     		</result>
 	   	</action>
+	    <action name="fileDownload" class="edu.scnu316.action.ExportExcel" method="exportExcel">
+    		 <result name="success" type="stream">
+                 <param name="contentType">application/vnd.ms-excel</param>
+                 <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                 <param name="inputName">excelFile</param>
+             </result>
+        </action>
 	   	<action name="UpdateAction" class="edu.scnu316.action.UpdateAction" method="Update">
 	   		<result name="usermanager.jsp">/admin/user/usermanager.jsp</result>
 	   	</action>

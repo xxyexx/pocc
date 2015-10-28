@@ -100,10 +100,17 @@ public class UserServiceImpl implements UserService{
 		return UserDAO.getInstance.queryByID(user_id);
 	}
 	
+	
 	@Override
 	public User getUser(String user_account) {
 		
 		return UserDAO.getInstance.queryByAccount(user_account);
+	}
+	
+	@Override
+	public List<User> getUserBySchool(String schoolName) {
+		
+		return UserDAO.getInstance.queryBySchool(schoolName);
 	}
 	
 	@Override

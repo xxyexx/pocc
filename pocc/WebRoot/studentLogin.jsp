@@ -273,7 +273,7 @@ input{
 				<a href="##">忘记密码？</a>
 			</div>			
 			<div class="row">
-				<input class="btn btn-success" type="button" onclick="geetest_ajax_results()" value="登&nbsp;&nbsp;录" id="submit-button" />
+				<input class="btn btn-success" type="button" onclick="checkForm()" value="登&nbsp;&nbsp;录" id="submit-button" />
 			</div>
 		</form>	
 

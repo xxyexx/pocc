@@ -149,7 +149,22 @@ public class UserDAO implements BaseDAO<User>{
 		return users;
 	}
 	
-
+	/**
+	 * 根据学校名查询该学校的学生列表
+	 */
+	public List<User> queryBySchool(String schoolName){
+		String hql=null;
+		if(schoolName.equals("不限")){
+			hql = "from user_inf";
+		}else if(!schoolName.equals("")){
+			hql="SELECT ui FROM user_inf ui WHERE ui.unit_name='"+schoolName+"'";
+		}
+		Query query = sess.createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<User> users = query.list();
+		return users;
+		
+	}	
 	
 	public List<User> queryByFilter(User model, int pageNo, int pageSize){
 		//用户过滤功能待完成

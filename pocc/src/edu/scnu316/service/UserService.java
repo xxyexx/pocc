@@ -123,5 +123,11 @@ public interface UserService {
 	 * @return true 更新成功 false 更新失败
 	 */
 	public boolean updateUser(User user);
+
+	/**
+	 * 根据学校返回该学校所有学生列表
+	 */
+	public List<User> getUserBySchool(String schoolName);
+
 	
 }

@@ -66,7 +66,7 @@ public class UserAction extends ActionSupport {
 		this.request = ServletActionContext.getRequest();
 		request.setCharacterEncoding("utf-8");
 		request.getSession().setAttribute("provincevalue", -1);//默认省份
-		request.getSession().setAttribute("schoolvalue", "不限");//默认学校
+		
 	}
 	/**
 	 * 一开始加载界面就要保存Province到request
