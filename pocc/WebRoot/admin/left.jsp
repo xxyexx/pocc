@@ -1,10 +1,9 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
 <style>
 .left-div{
-	min-width:200px !important;
 	background-color: #171d1f;
 	height:100% !important;
-	overflow-y:scroll;
+	overflow-y:auto;
 	overflow-x:hidden;
 }
 .nav{
@@ -13,9 +12,10 @@
 .nav-sidebar li a{
 	color:#7d868a;
 	display: block;
+	width:115%;
 	min-width:210px;
 	height:70px;
-	margin-left:-14px;
+	margin-left:-13px;
 	text-align:center;
     font-size:16px;
     font-family:"Lantinghei SC", "Open Sans", Arial, 
@@ -87,11 +87,15 @@
     	<span class='glyphicon glyphicon-pencil'></span>在线仿真实验管理
     	</a>
         <div class="collapse" id="collapse3">
-		    <a class="second_li">查看在线实验用户的列表</a>
+		    <a href="testingListshow.action" class="second_li">查看在线实验用户的列表</a>
 		</div>
     </li>
     <li><a role="button" data-toggle="collapse" href="#collapse4" aria-expanded="false" aria-controls="collapseExample">
-   		<span class='glyphicon glyphicon-cog'></span>系统日志管理</a>
+   		<span class='glyphicon glyphicon-cog'></span>系统日志管理
+   		</a>
+   		 <div class="collapse" id="collapse4">
+		    <a href="Log_show.action" class="second_li">查看在线实验用户的列表</a>
+		</div>
     </li>
   </ul>
 </div>

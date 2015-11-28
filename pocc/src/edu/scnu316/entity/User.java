@@ -58,7 +58,6 @@ public class User implements Cloneable{
 	}
 
 
-
 	public int getUser_id() {
 		return user_id;
 	}

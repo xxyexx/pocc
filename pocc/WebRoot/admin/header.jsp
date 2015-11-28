@@ -68,7 +68,7 @@
            <span class='glyphicon glyphicon-user' aria-hidden=true></span>&nbsp;&nbsp;欢迎您：<s:property value="#session.Role.user_account"></s:property><span class="caret"></span></a>
            <ul class="dropdown-menu" role="menu">
            	<li><a >当前用户权限：<s:property value="#session.Role.role"/></a></li>
-			<li><a >剩余使用时长：30天</a></li>
+			<li><a ></a></li>
 			<li><a href="RoleAction_Logout.action" class="btn btn-sm btn-success" style="width: 80px;margin-left:20px;">退出</a></li>
            </ul>
          </li>

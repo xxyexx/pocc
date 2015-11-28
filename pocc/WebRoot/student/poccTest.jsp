@@ -16,12 +16,12 @@
 <!-- Bootstrap -->
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
-<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+<link rel="stylesheet" href="css/BootSideMenu.css">
+<script src="js/BootSideMenu.js"  type="text/javascript"></script> 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-	<script src="../../assets/js/ie8-responsive-file-warning.js"></script>
   <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -40,75 +40,103 @@ body{
 	overflow-x: hidden;
 	background-color: #EBEAEB;
 }
-.row{
+.Test_main{
 	margin-top:60px;
-	padding-left:10px;
-}
-.left{
-	min-height:300px;
 }
 .right{
-	min-height:300px;
 }
 .btn-div{
 	padding-top: 18px;
 	padding-bottom:10px;
 	background-color:rgba(7,26,36,0.8);
 }
-
+#demo{
+	margin-top:60px;
+}
+#pfile{
+	visibility: hidden;
+}
 </style>
 <script type="text/javascript">
-
+	$(function(){
+		$("#demo").BootSideMenu({
+		  side:"left", // left or right
+		  autoClose:true // auto close when page loads
+		});
+	});
 	function GetQueryString(name)//获取地址栏参数
 	{
 	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
 	     var r = window.location.search.substr(1).match(reg);
 	     if(r!=null)return  unescape(r[2]); return null;
 	}
+    function submitFile(){//打开文件的输入框
+    	 $("#pfile").click();
+    };
+    function Formsubmit(ele){
+    	 // 返回 KB，保留小数点后两位
+    	if((ele.files[0].size / 1024).toFixed(2)>50){
+    		alert("文件大小不能超过50kb");
+    	}else{
+    		$("#form1").submit();
+    	}
+    }
+    
 </script>
 <body>
 <!--导入头部导航条-->
 <%@include file="header.jsp" %>
-<div class="row">
-<!-- 左边实验提示 -->
-<div class="col-md-2 left">
-	<div class="panel panel-primary">
-	  <div class="panel-heading">实验(一)</div>
-	  <div class="panel-body">
-	    带中断处理能力的模型机设计实验
-	  </div>
-	</div>
-	<div class="panel panel-primary">
-	  <div class="panel-heading">实验要求</div>
-	  <div class="panel-body">
-	    每项研究工作必须聘任专题负责人。专题负责人职责为：
-	（一）全面负责该项研究工作的运行管理；
-	（二）制定实验方案，严格执行实验方案，分析研究结果，撰写总结报告；
-	（三）执行标准操作规程的规定，及时提出修订或补充相应的标准操作规程的建议；
-	（四）确保参与研究的工作人员明确所承担的工作，并掌握相应的标准操作规程；
-	（五）掌握研究工作的进展，检查各种实验记录，确保其及时、直接、准确和清楚；
-	（六）详细记录实验中出现的意外情况和采取的措施；
-	（七）实验结束后，将实验方案、原始资料、应保存的标本、各种有关记录文件和总结报告等归档保存；
-	（八）及时处理质量保证部门提出的问题，确保研究工作各环节符合要求。
-	  </div>
-	</div>
 
-</div>
+<div id="demo">
+<!-- 左边实验提示 --> 
+	<div class="panel panel-primary">
+	  <div class="panel-heading">在线实验</div>
+	  <div class="panel-body">
+	    计算机组成原理仿真实验
+	  </div>
+	</div>
+	<div class="panel panel-primary">
+	  <div class="panel-heading">提示</div>
+	  <div class="panel-body">
+	  	1）点击仿真软件中的“保存实验”，得到实验文件；<br/>
+		2）点击右下方保存按钮保存实验文件；<br/>
+		3）可以下载已保存实验文件加载实验；<br/>
+		4）保存实验文件个数限制最多上传5个，超出自动删除时间最早文件<br/>
+	  </div>
+	</div>
+	<div class="panel panel-primary">
+	  <div class="panel-heading">我的实验</div>
+	  <div class="panel-body">
+	  	<div>
+	  		<s:iterator value="#request.poccfilelist" var="poccfile" >   
+	  			<div class="col-md-10">${poccfile.file_name}</div>
+			    <div class="col-md-2"><a href="${poccfile.save_url}"><span class="glyphicon glyphicon-save" aria-hidden="true"></span></a></div>
+			</s:iterator>  
+	  		
+	  	</div>
+	  </div>
+	</div>
 <!-- 左边实验提示 ..-->
+</div>  
+
+<div class="Test_main">
 <!-- 右边实验仿真软件 -->
-<div class="col-md-10 right">
+<div class="col-md-12 right">
 	<!-- 16:9 aspect ratio -->
 	<div class="embed-responsive embed-responsive-4by3">
 	  <embed class="embed-responsive-item" allowFullScreen="true" src="swf/pocc.swf"></embed>
 	</div>
 	<div class="btn-div col-md-12">
 		<div class="col-md-offset-6">
-		<a class="btn btn-primary col-md-4">提交</a>
-		<a class="btn btn-success col-md-4 col-md-offset-1">保存</a>
+		<form id="form1" action="savePoccFile.action"  enctype="multipart/form-data" method="post">
+			<input onclick="submitFile()" class="btn btn-primary col-md-4 col-md-offset-5" type="button" value="保存">
+			<input name="pocc" id="pfile" title="上传文件" type="file" onchange="Formsubmit(this)" />
+		</form>
 		</div>
 	</div>
 </div>
 <!-- 右边实验仿真软件 ..-->
 </div>
+<script src="js/BootSideMenu.js"  type="text/javascript"></script>  
 </body>
 </html>

@@ -10,7 +10,7 @@ import edu.scnu316.util.MD5Util;
 
 /**
  * 
- * @author 路上一坨翔
+ * @author liu
  * 管理员Service实现类
  */
 public class RoleServiceImpl implements RoleService{

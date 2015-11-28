@@ -17,7 +17,6 @@
 <title>华南师范大学计算机组成原理实验平台</title>
 <!-- Bootstrap -->
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
-<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
 <!-- Bootstrap..-->
@@ -165,7 +164,7 @@ input{
 						success : function(sdk_result) {
 							if(sdk_result=="captchasCorrect"){//当验证码正确时，被迫再次提交一次信息。
 								$(".tips:eq(2)").css("visibility","hidden");
-								checkForm();
+								checkForm2();
 								gt_captcha_obj.refresh();
 							}else{//验证码错误提示
 								$(".tips:eq(2)").css("visibility","visible");

@@ -68,6 +68,14 @@
 	  function changePic(){//打开文件的输入框
 	  	 $("#picInput").click();
 	  };
+	  function Formsubmit(ele){
+    	 // 返回 KB，保留小数点后两位
+    	if((ele.files[0].size / 1024).toFixed(2)>500){
+    		alert("文件大小不能超过500kb");
+    	}else{
+    		$("#form1").submit();
+    	}
+    }
   </script>
 <!--导入头部导航条-->
 <%@include file="header.jsp" %>   
@@ -82,10 +90,10 @@
 	<div class="setting-right">
 		<div class="userPic">
 		<img alt="用户头像" src="${session.User.icon_url}"/>
-		<form action="UserCenterChangePic.action"  enctype="multipart/form-data" method="post">
+		<form id="form1" action="UserCenterChangePic.action"  enctype="multipart/form-data" method="post">
 			<!-- 这个按钮不能用button,不然一点就已经提交了,我也不知道为什么。 -->
 			<input onclick="changePic()" type="button" value="上传头像" class="avator-btn-fake" />
-			<input name="image" id="picInput" title="上传头像" type="file" accept="image/*" onchange="this.form.submit()" />
+			<input name="image" id="picInput" title="上传头像" type="file" accept="image/*" onchange="Formsubmit(this)" />
 		</form>
 		</div>
 	</div>

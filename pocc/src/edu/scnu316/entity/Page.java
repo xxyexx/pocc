@@ -3,7 +3,7 @@ package edu.scnu316.entity;
 import java.util.List;
 
 /**
- * @author 路上一坨翔
+ * @author liu
  * 分页类
  * @param <T>
  */

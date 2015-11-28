@@ -10,10 +10,12 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import edu.scnu316.entity.LogData;
 import edu.scnu316.entity.User;
 import edu.scnu316.service.UserService;
 import edu.scnu316.service.impl.UserServiceImpl;
 import edu.scnu316.util.CityUtil;
+import edu.scnu316.util.LogUtil;
 import edu.scnu316.util.MD5Util;
 import edu.scnu316.util.StringUtil;
 
@@ -129,6 +131,10 @@ public class UserAction extends ActionSupport {
 		if(getResult().equals("Login_success")){//登录成功保存session
 			User user=userService.getUser(userName);
 			request.getSession().setAttribute("User", user);
+			
+			//日志记录
+			LogData logdata=new LogData("student",user.getUser_account(),user.getUsername(),user.getUnit_name(),new Timestamp(System.currentTimeMillis()),"用户登录");
+			LogUtil.saveLog(logdata);
 		}
 		return SUCCESS;
 	}

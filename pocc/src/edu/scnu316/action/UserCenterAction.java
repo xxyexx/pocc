@@ -20,7 +20,7 @@ import edu.scnu316.util.CityUtil;
 import edu.scnu316.util.MD5Util;
 
 /**
- * @author 路上一坨翔
+ * @author liu
  * 学生信息的修改
  * 学生用户中心的所有action
  */

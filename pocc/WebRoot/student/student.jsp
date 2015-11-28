@@ -16,7 +16,6 @@
 <!-- Bootstrap -->
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
-<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -147,20 +146,18 @@ body{
 <div class="container_right">
 	 <!-- Nav tabs -->
 	  <ul id="myTabs" class="nav nav-tabs" role="tablist">
-	    <li role="presentation" class="active col-md-3 col-xs-3"><a href="#Courses" aria-controls="Courses" role="tab" data-toggle="tab">课程信息</a></li>
-	    <li role="presentation" class=" col-md-3 col-xs-3"><a href="#experiment" aria-controls="experiment" role="tab" data-toggle="tab">在线实验</a></li>
-	    <li role="presentation" class=" col-md-3 col-xs-3"><a href="#myQuestions" aria-controls="myQuestions" role="tab" data-toggle="tab">我的提问</a></li>
-	    <li role="presentation" class=" col-md-3 col-xs-3"><a href="#myShare" aria-controls="myShare" role="tab" data-toggle="tab">我的分享</a></li>
+	    <li role="presentation" class="active col-md-6 col-xs-6"><a href="#Courses" aria-controls="Courses" role="tab" data-toggle="tab">课件视频</a></li>
+	    <li role="presentation" class=" col-md-6 col-xs-6"><a href="#experiment" aria-controls="experiment" role="tab" data-toggle="tab">在线实验</a></li>
 	  </ul>
 	
 	  <!-- Tab panes -->
 	  <div class="tab-content">
 	    <div role="tabpanel" class="tab-pane active" id="Courses">
-	    	<!-- 课程列表 -->
+	    	<!-- 课件列表 -->
 	    	<s:if test="false">
 	    		<div class="NotExist">
 			    	<h1 align="center">Σ(っ °Д °;)っ</h1>
-			    	<p align="center">居然没有课Σ(っ °Д °;)っ</p>
+			    	<p align="center">居然没有课件视频Σ(っ °Д °;)っ</p>
 			    	<hr class="divider" width="95%" align="center"/>
 		    	</div>
 	    	</s:if>
@@ -175,40 +172,19 @@ body{
 				 </div>
 				 <div class="col-md-7 col-sm-6">
 			  <div class="media-body">
-			    <h4 class="media-heading">实验(一)</h4>
-			    <p>带中断处理能力的模型机设计实验</p>
+			    <h4 class="media-heading">视频教程</h4>
+			    <p>计算机组成原理实验视频教程</p>
 			  </div>
 			  </div>
 			  <div class="col-md-2 col-sm-3">
 				  <div class="media-right media-middle">
-				      <a href="beginTest.action" class="btn btn-primary">开始实验</a>
-				  </div>
-			  </div>
-			</div>
-			<hr class="divider" width="95%" align="center"/>
-			<div class="media">
-				<div class="col-md-3 col-sm-3">
-				  <div class="media-left ">
-				    <a href="#">
-				      <img class="media-object" height="85px" src="image/thumbnail_Pic1.png" alt="...">
-				    </a>
-				  </div>
-				 </div>
-				 <div class="col-md-7 col-sm-6">
-			  <div class="media-body">
-			    <h4 class="media-heading">实验(二)</h4>
-			    <p>阵列乘法器设计实验</p>
-			  </div>
-			  </div>
-			  <div class="col-md-2 col-sm-3">
-				  <div class="media-right media-middle">
-				      <a href="beginTest.action" class="btn btn-primary">开始实验</a>
+				      <a href="##" class="btn btn-primary" target="_blank">视频链接</a>
 				  </div>
 			  </div>
 			</div>
 			<hr class="divider" width="95%" align="center"/>
 			</s:else>
-			<!-- 课程列表END -->
+			<!-- 课件列表END -->
 		</div>
 	    <div role="tabpanel" class="tab-pane" id="experiment">
 	    	<!-- 个人实验历史记录 -->
@@ -230,13 +206,13 @@ body{
 					 </div>
 					 <div class="col-md-7 col-sm-6">
 				  <div class="media-body">
-				    <h4 class="media-heading">实验(二)</h4>
-				    <p>阵列乘法器设计实验</p>
+				    <h4 class="media-heading">在线实验</h4>
+				    <p>计算机组成原理仿真实验</p>
 				  </div>
 				  </div>
 				  <div class="col-md-2 col-sm-3">
 					  <div class="media-right media-middle">
-					      <a href="continueTest.action" class="btn btn-success">继续实验</a>
+					      <a href="beginTest.action" class="btn btn-success">开始实验</a>
 					  </div>
 				  </div>
 				</div>
@@ -244,30 +220,7 @@ body{
 			<hr class="divider" width="95%" align="center"/>
 			<!-- 个人实验历史记录 END -->
 		</div>
-	    <div role="tabpanel" class="tab-pane" id="myQuestions">
-	    	<!-- 我的问题历史记录列表 -->
-	    	<s:if test="true">
-			<div class="NotExist">
-		    	<h1 align="center">:(</h1>
-		    	<p align="center">你太懒了~~还没问过问题Σ(っ °Д °;)っ</p>
-		    	<hr class="divider" width="95%" align="center"/>
-	    	</div>
-	    	</s:if>
-	    	<s:else></s:else>
-	    	<!-- 我的问题历史记录列表END -->
-		</div>
-	    <div role="tabpanel" class="tab-pane" id="myShare">
-	    	<!-- 我的资源分享历史记录列表 -->
-	    	<s:if test="true">
-			<div class="NotExist">
-		    	<h1 align="center">:(</h1>
-		    	<p align="center">你太懒了~~还没分享过资源Σ(っ °Д °;)っ</p>
-		    	<hr class="divider" width="95%" align="center"/>
-	    	</div>
-	    	</s:if>
-	    	<s:else></s:else>
-	    	<!-- 我的资源分享历史记录列表END -->
-		</div>
+
 	  </div>	
 </div>
 </div>
@@ -285,20 +238,22 @@ body{
 			</div>
 			<br/>
 			<div class="user_info">
-				<div class="col-md-4 col-xs-3">性别</div>
-				<div class="col-md-8 col-xs-9"><s:property value="#session.User.sex"/></div>
+				<div class="col-md-5 col-xs-5">租期     </div>
+				<div class="col-md-3 col-xs-3"><s:property value="#session.User.getRent_start('yy.MM.dd')"/>~</div>
+				<div class="col-md-4 col-xs-4"><s:property value="#session.User.getRent_end('yy.MM.dd')"/></div>
+				
 			</div>
 			<div class="user_info">
-				<div class="col-md-4 col-xs-3">年龄</div>
-				<div class="col-md-8 col-xs-9"><s:property value="#session.User.age"/></div>
+				<div class="col-md-5 col-xs-5">所属单位</div>
+				<div class="col-md-7 col-xs-7"><s:property value="#session.User.unit_name"/></div>
 			</div>
 			<div class="user_info">
-				<div class="col-md-4 col-xs-3">单位</div>
-				<div class="col-md-8 col-xs-9"><s:property value="#session.User.unit_name"/></div>
+				<div class="col-md-5 col-xs-5">锁定状态</div>
+				<div class="col-md-7 col-xs-7"><s:property value="#session.User.getLock_modeToCN()"/></div>
 			</div>
 			<div class="user_info">
-				<div class="col-md-4 col-xs-3">签名</div>
-				<div class="col-md-8 col-xs-9"><s:property value="#session.User.remark"/></div>
+				<div class="col-md-5 col-xs-5">上次登录</div>
+				<div class="col-md-7 col-xs-7"><s:property value="#session.User.last_login"/></div>
 			</div>
 		</div>
 	</div>

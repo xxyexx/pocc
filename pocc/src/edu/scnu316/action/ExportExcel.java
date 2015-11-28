@@ -27,6 +27,11 @@ import edu.scnu316.entity.User;
 import edu.scnu316.service.UserService;
 import edu.scnu316.service.impl.UserServiceImpl;
 
+/**
+ * 
+ * @author liu
+ * 用户列表导出Excel表
+ */
 public class ExportExcel extends ActionSupport {
 	
 	private String fileName;

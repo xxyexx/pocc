@@ -1,5 +1,6 @@
 package edu.scnu316.action;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,9 +9,11 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import edu.scnu316.entity.LogData;
 import edu.scnu316.entity.Role;
 import edu.scnu316.service.RoleService;
 import edu.scnu316.service.impl.RoleServiceImpl;
+import edu.scnu316.util.LogUtil;
 
 public class RoleAction extends ActionSupport {
 	private String userName;
@@ -36,6 +39,12 @@ public class RoleAction extends ActionSupport {
 		if(getResult().equals("Login_success")){//登录成功保存session
 			Role role=Roleservice.getRole(userName);
 			request.getSession().setAttribute("Role", role);
+			
+			//日志记录
+			String identity="role";
+			if(role.getUser_account().equals("admin")){identity="admin";}
+			LogData logdata=new LogData(identity,role.getUser_account(),"",role.getRemark(),new Timestamp(System.currentTimeMillis()),"管理员登录");
+			LogUtil.saveLog(logdata);
 		}
 		System.out.println("result="+getResult());
 		return SUCCESS;

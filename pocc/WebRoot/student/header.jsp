@@ -38,7 +38,7 @@
 	#nav-div{
 		min-width:400px;
 	}
-	.container{
+	.header_container{
 		width: 80% !important;
 		min-width:650px !important;
 		margin:0 auto;
@@ -57,7 +57,7 @@
 
 <!--导航条-->
 <div class="navbar navbar-defalut navbar-fixed-top" role="navigation" id="menu-nav">
- <div class="container " align="left" id="nav-div">
+ <div class="header_container" align="left" id="nav-div">
   <div class="navbar-header">
      　<!-- .navbar-toggle样式用于toggle收缩的内容，即nav-collapse collapse样式所在元素 -->
        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -75,9 +75,8 @@
   <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
   <div class="collapse navbar-collapse header" role="navigation">
     <ul class="nav navbar-nav navbar-right ">
-     	 <li><a class="active"  href="student.action?select=0"><span class='glyphicon glyphicon-education' aria-hidden=true></span>&nbsp;&nbsp;课程</a></li>
+     	 <li><a class="active"  href="student.action?select=0"><span class='glyphicon glyphicon-education' aria-hidden=true></span>&nbsp;&nbsp;课件</a></li>
      	 <li><a class="active"  href="student.action?select=1"><span class='glyphicon glyphicon-pencil' aria-hidden=true></span>&nbsp;&nbsp;实验</a></li>
-     	 <li><a class="active"  href="student.action?select=2"><span class='glyphicon glyphicon-question-sign' aria-hidden=true></span>&nbsp;&nbsp;问答</a></li>
         <li class="dropdown">
            <a href="#" class="dropdown-toggle TouserCenter" data-toggle="dropdown"><img class="img-circle" alt="头像" src="${session.User.icon_url}" width="20px;">&nbsp;<s:property value="#session.User.username"/></a>
            <ul class="dropdown-menu" role="menu">

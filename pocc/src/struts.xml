@@ -29,7 +29,7 @@
         <action name="SysLogin">
     		<result>/login.jsp</result>
     	</action>
-    	<action name="RoleLogin">
+    	<action name="RoleLogin" class="edu.scnu316.action.FlowCountAction" method="show">
     		<result>/admin/SysIndex.jsp</result>
     	</action>
     	<action name="CreateUser">
@@ -63,6 +63,12 @@
 	   	</action>
 	   	<action name="SelectRole" class="edu.scnu316.action.RoleAction" method="Select">
 	   		<result name="rolemanager.jsp">/admin/role/rolemanager.jsp</result>
+	   	</action>
+	   	<action name="testingList*" class="edu.scnu316.action.TestingListAction" method="{1}">
+	   		<result name="show">/admin/user/testing.jsp</result>
+	   	</action>
+	   	<action name="Log_*" class="edu.scnu316.action.LogAction" method="{1}">
+	   		<result>/admin/user/log.jsp</result>
 	   	</action>
     </package>
     <!-- 管理员登录不作拦截，所以分开一个package -->
@@ -98,9 +104,13 @@
    		<action name="student">
     		<result>/student/student.jsp</result>
     	</action>
+    	<action name="*PoccFile" class="edu.scnu316.action.PoccTestAction" method="{1}">
+    		<result name="show" type="redirectAction">showPoccFile.action</result>
+    		<result>/student/poccTest.jsp</result>
+    	</action>
     	<!-- 开始新的实验begin;继续实验 continue -->
    		<action name="*Test">
-    		<result>/student/poccTest.jsp</result>
+    		<result type="redirectAction">showPoccFile.action</result>
     	</action>
    		<action name="UserCenter*" class="edu.scnu316.action.UserCenterAction" method="{1}">
     		<result name="UserCenter.jsp">/student/UserCenter.jsp</result>

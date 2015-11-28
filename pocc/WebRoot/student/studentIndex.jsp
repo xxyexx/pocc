@@ -16,7 +16,6 @@
 <!-- Bootstrap -->
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css" href="bootstrap-3.3.4-dist/css/bootstrap.min.css">
-<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="bootstrap-3.3.4-dist/js/bootstrap.js"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -104,7 +103,7 @@ font-weight: bolder;
     <div class="thumbnail">
       <a href="student.action?select=0"><img class="img-responsive" src="image/thumbnail_Pic1.png" alt="课程信息"></a>
       <div class="caption">
-        <h3><a href="student.action?select=0">课程信息</a></h3>
+        <h3><a href="student.action?select=0">课件视频</a></h3>
         </div>
     </div>
   </div>
@@ -118,9 +117,9 @@ font-weight: bolder;
   </div>
   <div class="col-sm-6 col-md-4">
     <div class="thumbnail">
-      <a href="student.action?select=3"><img class="img-responsive" src="image/thumbnail_Pic3.png" alt="资源共享"></a>
+      <a ><img class="img-responsive" src="image/thumbnail_Pic3.png" alt="资源共享"></a>
       <div class="caption">
-        <h3><a href="student.action?select=3">资源共享</a></h3>
+        <h3><a >问题反馈</a></h3>
         </div>
     </div>
   </div>

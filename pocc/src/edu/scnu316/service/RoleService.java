@@ -6,7 +6,7 @@ import edu.scnu316.entity.Role;
 import edu.scnu316.entity.User;
 
 /**
- * @author 路上一坨翔
+ * @author liu
  * 管理员Service接口
  */
 

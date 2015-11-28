@@ -6,6 +6,10 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
+/**
+ * @author liu
+ *管理员登录拦截器
+ */
 public class RoleLoginInterceptor extends AbstractInterceptor{
 
 	@Override

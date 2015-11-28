@@ -58,7 +58,11 @@ public class CityUtil {
 	 */
 	public static String getProvince_name(int city_id){
 		sql = "select p.province from city c,province p where c.id="+city_id+" and c.province_id=p.id;";
-		return (String) sess.createSQLQuery(sql).list().get(0);
+		if(sess.createSQLQuery(sql).list().size()!=0){
+			return (String) sess.createSQLQuery(sql).list().get(0);
+		}else{
+			return "(´･ω･`)";
+		}
 	}
 	
 	/**
@@ -124,16 +128,3 @@ public class CityUtil {
 		return res;		
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

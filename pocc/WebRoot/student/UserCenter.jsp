@@ -100,7 +100,7 @@ body{
 		<form action="UserCenterChangeMessage.action" method="post" class="user-info">
 		<div class="info-group">
 		    <label for="userName" class="control-label">用户名</label>
-		    <input name="user.username" value="${session.User.username}" class="userinput form-control" type="text" placeholder="请输入用户名">
+		    <input name="user.username" value="${session.User.username}" class="userinput form-control" readonly="readonly" type="text" placeholder="请输入用户名">
 		</div>
 		<div class="info-group">
 		    <label class="control-label">所在城市</label>
@@ -114,7 +114,7 @@ body{
 		</div>
 		<div class="info-group">
 		    <label for="school" class="control-label">所在学校</label>
-		    <input name="user.unit_name" value="${session.User.unit_name}" class="userinput form-control" type="text"  id="userName" placeholder="请输入学校（单位）全称">
+		    <input name="user.unit_name" value="${session.User.unit_name}" class="userinput form-control" type="text" readonly="readonly"  id="userName" placeholder="请输入学校（单位）全称">
 		</div>
 		
 		<div class="info-group">

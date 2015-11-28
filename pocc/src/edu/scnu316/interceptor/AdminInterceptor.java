@@ -9,6 +9,10 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 import edu.scnu316.entity.Role;
 
+/**
+ * @author liu
+ *admin管理员拦截器，拦截不是系统管理员的操作
+ */
 public class AdminInterceptor extends AbstractInterceptor{
 
 	@Override
